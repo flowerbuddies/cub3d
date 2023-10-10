@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/10 19:22:51 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/11 00:09:17 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,3 +48,17 @@ int	open_file(char *filename)
 	return (fd);
 }
 
+int	error(mlx_t *mlx, char *message)
+{
+	if (mlx)
+		mlx_close_window(mlx);
+	ft_putstr_fd("Error\n", 2);
+	if (message)
+		ft_putstr_fd(message, 2);
+	else if (mlx)
+		ft_putstr_fd((char *)mlx_strerror(mlx_errno), 2);
+	else
+		ft_putstr_fd(strerror(errno), 2);
+	ft_putchar_fd('\n', 2);
+	exit(EXIT_FAILURE);
+}

@@ -3,21 +3,20 @@ NAME := cub3D
 SRCS_DIR := src
 BUILD_DIR := build
 BREW := $(shell brew --prefix)
-MLX42 := mlx42/build
+LIBFT := lib/libft
+MLX42 := lib/mlx42/build
 
 # Compilation settings
 CC := cc #compiler
 CFLAGS := -Wextra -Wall -Wunreachable-code -Ofast #flags #TODO: add -Werror
-CFLAGS += -Iinclude -Imlx42/include -Ilibft #includes
-LIBS := -L$(BREW)/Cellar/glfw/3.3.8/lib/ -lglfw #GLFW
+CFLAGS += -Iinclude -Ilib/mlx42/include -I$(LIBFT) #includes
+LIBS := -L$(BREW)/Cellar/glfw/3.3.8/lib -lglfw #GLFW
 LIBS += -L$(MLX42) -lmlx42 #MLX42
-LIBS += -Llibft -lft #libft
+LIBS += -L$(LIBFT) -lft #libft
 
 # Source files
 SRCS := $(addprefix $(SRCS_DIR)/,\
 	main.c\
-	error.c\
-	keys.c\
 	utils.c\
 	parser/parser.c\
 	parser/params.c\
@@ -26,7 +25,7 @@ OBJS := $(patsubst $(SRCS_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 OBJS_DIRS := $(sort $(dir $(OBJS)))
 
 # Main rule
-all: $(MLX42)/libmlx42.a libft/libft.a $(OBJS_DIRS) $(NAME)
+all: $(MLX42)/libmlx42.a $(LIBFT)/libft.a $(OBJS_DIRS) $(NAME)
 
 # Final binary rule
 $(NAME): $(OBJS)
@@ -43,11 +42,11 @@ $(OBJS_DIRS):
 
 # Dependencies rules
 $(MLX42)/libmlx42.a:
-	@cmake mlx42 -B $(MLX42)
+	@cmake lib/mlx42 -B $(MLX42)
 	@make -C $(MLX42) -j4
 
-libft/libft.a:
-	@make -C libft
+$(LIBFT)/libft.a:
+	@make -C $(LIBFT)
 
 # Clean rules
 clean:

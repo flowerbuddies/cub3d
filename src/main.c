@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:22:30 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/10 18:57:53 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/11 00:09:21 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ int	main(int ac, char **av)
 	// 	return (error(map.mlx, NULL));
 	// if (mlx_image_to_window(map.mlx, map.mini.image, 0, 0) == -1)
 	// 	return (error(map.mlx, NULL));
-
 	// // mlx_loop_hook(mlx, ft_randomize, mlx);
 	// // mlx_loop_hook(mlx, ft_hook, mlx);
 	// // mlx_loop(map.mlx);
