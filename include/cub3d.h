@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/10 18:19:28 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/10 18:38:30 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,6 @@ int		error(mlx_t *mlx, char *message);
 void	parse(char *filename, t_assets *assets);
 int		open_file(char *filename);
 bool	streq(const char *s1, const char *s2);
+void	free_2d(char **obj);
 
 #endif

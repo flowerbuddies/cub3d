@@ -6,11 +6,21 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/10 18:18:50 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/10 18:38:24 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+void	free_2d(char **obj)
+{
+	int	i;
+
+	i = 0;
+	while (obj[i])
+		free(obj[i++]);
+	free(obj);
+}
 
 bool	streq(const char *s1, const char *s2)
 {

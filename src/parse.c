@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/10 18:30:38 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/10 18:51:09 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,45 +29,49 @@ static bool	are_params_satisfied(t_assets *assets)
 		&& assets->ceiling && assets->floor); //TODO: init all of those to NULL
 }
 
-static bool	parse_param(char **parts, t_assets *assets)
+static bool	parse_param(char *line, t_assets *assets)
 {
-	const char	*ids = {"NO", "SO", "EA", "WE", "C", "F", "\n"};
-	int			i;
+	const char	**parts = ft_split(line, ' ');
 
-	i = -1;
-	while (++i < 7 && !streq(parts[0], ids[i]))
-		;
-	if (i == 7)
-		return false; //TODO
-	if (ids == NO)
-		no_handling()
-	ele if (ids == NO)
-		no_handling()
-	else if (ids == NO)
-		no_handling()
+	if (!parts)
+		error(NULL, NULL);
+	// TODO: check empty file (gnl returns NULL?)
+	if (streq(parts[0], "NO"))
+		assets->north = get_texture(parts[1]);
+	else if (streq(parts[0], "SO"))
+		assets->south = get_texture(parts[1]);
+	else if (streq(parts[0], "EA"))
+		assets->east = get_texture(parts[1]);
+	else if (streq(parts[0], "WE"))
+		assets->west = get_texture(parts[1]);
+	else if (streq(parts[0], "F"))
+		assets->floor = get_color(parts);
+	else if (streq(parts[0], "C"))
+		assets->ceiling = get_color(parts);
+	else
+	{
+		free(line);
+		free_2d(parts);
+		error(NULL, "Invalid parameter identifier");
+	}
+	free_2d(parts);
 }
 
 
 static void	parse_params(int fd, t_assets *assets)
 {
 	char	*line;
-	char	*parts;
 
 	while (!are_params_satisfied(assets))
 	{
 		line = get_next_line(fd);
 		if (!line)
 			error(NULL, "Parameters not satisfied");
-		parts = ft_split(line, ' ');
-		if (!parts)
-			error(NULL, NULL);
-		else if (parts[0])
-			parse_param(parts, assets);
-		free(parts); //TODO: 2d
+		parse_param(line, assets);
 		free(line);
 	}
-	// if (are_params_satisfied(assets))
 }
+
 void	parse(char *filename, t_assets *assets)
 {
 	int	fd;
