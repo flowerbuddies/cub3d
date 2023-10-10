@@ -1,53 +1,67 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse.c                                            :+:      :+:    :+:   */
+/*   params.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/10 18:51:09 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/10 19:28:33 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	check_filename(char *filename)
+static mlx_texture_t	*get_texture(const char **parts, char *line)
 {
-	char	*ext;
+	mlx_texture_t	*out;
 
-	ext = ft_strrchr(filename, '.');
-	if (!ext)
-		error(NULL, "Invalid file name");
-	if (ft_strlen(ext) != 4 || ft_strncmp(ext, ".cub\0", 4))
-		error(NULL, "Invalid file name");
+	if (len_2d(parts) != 3 || !streq(parts[2], "\n")) //TODO:check `NO` but without map at the end
+	{
+		free_2d(parts);
+		free(line);
+		error(NULL, "Invalid parameter argument count");
+	}
+	out = mlx_load_png(parts[1]); //TODO:check `NO`
+	if (!out)
+	{
+		free_2d(parts);
+		free(line);
+		error(NULL, "Cannot load texture");
+	}
+	return (out);
+}
+
+static int	*get_color(const char **parts, char *line)
+{
+	return (malloc(sizeof(int)));
 }
 
 static bool	are_params_satisfied(t_assets *assets)
 {
 	return (assets->north && assets->south && assets->east && assets->west
-		&& assets->ceiling && assets->floor); //TODO: init all of those to NULL
+		&& assets->ceiling && assets->floor);
 }
 
-static bool	parse_param(char *line, t_assets *assets)
+static void	parse_param(char *line, t_assets *assets)
 {
-	const char	**parts = ft_split(line, ' ');
+	const char	**parts = (const char **)ft_split(line, ' ');
 
 	if (!parts)
 		error(NULL, NULL);
 	// TODO: check empty file (gnl returns NULL?)
 	if (streq(parts[0], "NO"))
-		assets->north = get_texture(parts[1]);
+		assets->north = get_texture(parts, line);
 	else if (streq(parts[0], "SO"))
-		assets->south = get_texture(parts[1]);
+		assets->south = get_texture(parts, line);
 	else if (streq(parts[0], "EA"))
-		assets->east = get_texture(parts[1]);
+		assets->east = get_texture(parts, line);
 	else if (streq(parts[0], "WE"))
-		assets->west = get_texture(parts[1]);
+		assets->west = get_texture(parts, line);
 	else if (streq(parts[0], "F"))
-		assets->floor = get_color(parts);
+		assets->floor = get_color(parts, line);
 	else if (streq(parts[0], "C"))
-		assets->ceiling = get_color(parts);
+		assets->ceiling = get_color(parts, line);
 	else
 	{
 		free(line);
@@ -58,7 +72,7 @@ static bool	parse_param(char *line, t_assets *assets)
 }
 
 
-static void	parse_params(int fd, t_assets *assets)
+void	parse_params(int fd, t_assets *assets)
 {
 	char	*line;
 
@@ -70,28 +84,4 @@ static void	parse_params(int fd, t_assets *assets)
 		parse_param(line, assets);
 		free(line);
 	}
-}
-
-void	parse(char *filename, t_assets *assets)
-{
-	int	fd;
-
-	check_filename(filename);
-	fd = open_file(filename);
-	parse_params(fd, assets);
-
-
-
-
-
-
-
-	if (close(fd) == -1)
-		error(NULL, NULL);
-
-	// while (get_next_line(fd))
-	// {
-	// 	/* code */
-	// }
-
 }

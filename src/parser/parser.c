@@ -1,50 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/10 19:22:51 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/10 19:03:31 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	free_2d(const char **obj)
+static void	check_filename(char *filename)
 {
-	int	i;
+	char	*ext;
 
-	i = 0;
-	while (obj[i])
-		free((char *)obj[i++]);
-	free(obj);
+	ext = ft_strrchr(filename, '.');
+	if (!ext)
+		error(NULL, "Invalid file name");
+	if (ft_strlen(ext) != 4 || ft_strncmp(ext, ".cub\0", 4))
+		error(NULL, "Invalid file name");
 }
 
-int	len_2d(const char **obj)
+void	parse(char *filename, t_assets *assets)
 {
-	int	i;
+	int	fd;
 
-	i = 0;
-	while (obj[i])
-		i++;
-	return (i);
-}
+	check_filename(filename);
+	fd = open_file(filename);
+	ft_bzero(assets, sizeof(assets));
+	parse_params(fd, assets);
 
-bool	streq(const char *s1, const char *s2)
-{
-	const int	s1_len = ft_strlen(s1);
 
-	return (s1_len == (int)ft_strlen(s2) && ft_strncmp(s1, s2, s1_len) == 0);
-}
 
-int	open_file(char *filename)
-{
-	const int	fd = open(filename, O_RDONLY);
 
-	if (fd == -1)
+
+
+
+	if (close(fd) == -1)
 		error(NULL, NULL);
-	return (fd);
-}
 
+	// while (get_next_line(fd))
+	// {
+	// 	/* code */
+	// }
+
+}

@@ -18,8 +18,9 @@ SRCS := $(addprefix $(SRCS_DIR)/,\
 	main.c\
 	error.c\
 	keys.c\
-	parse.c\
 	utils.c\
+	parser/parser.c\
+	parser/params.c\
 )
 OBJS := $(patsubst $(SRCS_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 OBJS_DIRS := $(sort $(dir $(OBJS)))

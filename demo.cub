@@ -1,0 +1,11 @@
+NO ./assets/grass.png
+SO ./assets/grass.png
+EA ./assets/grass.png
+WE ./assets/grass.png
+
+F 255,0,0
+C 255,255,0
+
+111
+1N1
+111

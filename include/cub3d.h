@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/10 18:38:30 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/10 19:28:04 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,22 +25,15 @@
 # define WIDTH 1280
 # define HEIGHT 720
 
-typedef struct s_rgb
-{
-	int32_t	r;
-	int32_t	g;
-	int32_t	b;
-}			t_rgb;
-
 typedef struct s_assets
 {
-	char	*north;
-	char	*south;
-	char	*east;
-	char	*west;
-	t_rgb	*floor;
-	t_rgb	*ceiling;
-}			t_assets;
+	mlx_texture_t	*north;
+	mlx_texture_t	*south;
+	mlx_texture_t	*east;
+	mlx_texture_t	*west;
+	int				*floor;
+	int				*ceiling;
+}					t_assets;
 
 typedef struct s_minimap
 {
@@ -61,6 +54,8 @@ int		error(mlx_t *mlx, char *message);
 void	parse(char *filename, t_assets *assets);
 int		open_file(char *filename);
 bool	streq(const char *s1, const char *s2);
-void	free_2d(char **obj);
+void	free_2d(const char **obj);
+int		len_2d(const char **obj);
+void	parse_params(int fd, t_assets *assets);
 
 #endif
