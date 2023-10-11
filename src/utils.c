@@ -6,21 +6,11 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/11 00:09:17 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/11 17:27:53 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	free_2d(const char **obj)
-{
-	int	i;
-
-	i = 0;
-	while (obj[i])
-		free((char *)obj[i++]);
-	free(obj);
-}
 
 int	len_2d(const char **obj)
 {

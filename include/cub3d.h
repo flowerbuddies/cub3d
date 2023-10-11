@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/11 00:09:26 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/11 17:28:42 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,14 @@ typedef struct s_ctx
 }					t_ctx;
 
 // utils.c
-void				free_2d(const char **obj);
 int					len_2d(const char **obj);
 bool				streq(const char *s1, const char *s2);
 int					open_file(char *filename);
 int					error(mlx_t *mlx, char *message);
+
+// free.c
+void				free_2d(const char **obj);
+void				free_assets(t_assets *assets);
 
 // parser/*.c
 void				parse(char *filename, t_assets *assets);

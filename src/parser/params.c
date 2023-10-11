@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/11 17:12:31 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/11 17:37:32 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,15 @@ static mlx_texture_t	*get_texture(const char **parts, char *line)
 		free(line);
 		error(NULL, "Cannot load texture"); // TODO: fix error message
 	}
+	free_2d(parts);
+	free(line);
 	return (out);
 }
 
 static int	*get_color(const char **parts, char *line)
 {
+	free_2d(parts);
+	free(line);
 	return (malloc(sizeof(int)));
 }
 
@@ -51,9 +55,9 @@ static void	parse_param(char *line, t_assets *assets)
 	// TODO: check empty file (gnl returns NULL?)
 	if (!parts)
 		error(NULL, NULL);
-	if (!*parts)
-		return (free_2d(parts));
-	if (streq(parts[0], "NO"))
+	else if (!*parts)
+		(free_2d(parts), free(line));
+	else if (streq(parts[0], "NO"))
 		assets->north = get_texture(parts, line);
 	else if (streq(parts[0], "SO"))
 		assets->south = get_texture(parts, line);
@@ -68,21 +72,22 @@ static void	parse_param(char *line, t_assets *assets)
 	else
 	{
 		(free_2d(parts), free(line));
-		error(NULL, "Invalid parameter identifier");
+		error(NULL, "Invalid parameter identifier/Parameters not satisfied");
 	}
-	(free_2d(parts), free(line));
 }
 
 void	parse_params(int fd, t_assets *assets)
 {
+	char	*raw_line;
 	char	*line;
 
 	while (!are_params_satisfied(assets))
 	{
-		line = get_next_line(fd);
-		if (!line)
+		raw_line = get_next_line(fd);
+		if (!raw_line)
 			error(NULL, "Parameters not satisfied");
-		parse_param(ft_substr(line, 0, ft_strlen(line) - 1), assets);
-		free(line);
+		line = ft_substr(raw_line, 0, ft_strlen(raw_line) - 1);
+		free(raw_line);
+		parse_param(line, assets);
 	}
 }
