@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/11 15:18:08 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/11 15:38:07 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,14 +80,19 @@ static void	parse_param(char *line, t_assets *assets)
 void	parse_params(int fd, t_assets *assets)
 {
 	char	*line;
+	char	*identifier;
 
 	while (!are_params_satisfied(assets))
 	{
 		line = get_next_line(fd);
 		if (!line)
 			error(NULL, "Parameters not satisfied");
-		printf("line: _%s_", line); //TODO: rm
-		parse_param(line, assets);
+		identifier = line;
+		while (*identifier == ' ')
+			identifier++;
+		printf("identifier: _%s_", identifier); //TODO: rm
+		if (*identifier != '\n' && *identifier != '\0')
+			parse_param(identifier, assets);
 		free(line);
 	}
 }
