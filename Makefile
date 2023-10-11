@@ -10,8 +10,8 @@ MLX42 := lib/mlx42/build
 CC := cc #compiler
 CFLAGS := -Wextra -Wall -Wunreachable-code -Ofast -g #flags #TODO: add -Werror remove -g -fsanitize=address
 CFLAGS += -Iinclude -Ilib/mlx42/include -I$(LIBFT) #includes
-LIBS := -L$(BREW)/Cellar/glfw/3.3.8/lib -lglfw #GLFW
-LIBS += -L$(MLX42) -lmlx42 #MLX42
+LIBS := -L$(MLX42) -lmlx42 #MLX42
+LIBS += -L$(BREW)/Cellar/glfw/3.3.8/lib -lglfw #GLFW
 LIBS += -L$(LIBFT) -lft #libft
 
 # Source files
@@ -57,6 +57,7 @@ clean:
 fclean: clean
 	@echo [$(NAME)]: cleaned
 	@rm -f $(NAME)
+	@rm -f $(LIBFT)/libft.a
 	@rm -rf $(MLX42)
 
 # Other rules
