@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 20:42:32 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/12 01:46:03 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/12 01:54:06 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	parse_map(int fd, t_map *map)
 	if (!map->walls)
 		error(NULL, NULL);
 	map->walls[0] = NULL;
-	while (42)
+	while (line)
 	{
 		if (!line[0])
 			seen_empty_line = true;
@@ -97,7 +97,5 @@ void	parse_map(int fd, t_map *map)
 			append(&map->walls, parse_line(line));
 		free(line);
 		line = gnl_no_nl(fd);
-		if (!line)
-			break ;
 	}
 }

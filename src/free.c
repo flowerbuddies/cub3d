@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 17:27:38 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/11 17:30:19 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/12 01:57:46 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,4 +30,9 @@ void	free_assets(t_assets *assets)
 	mlx_delete_texture(assets->west);
 	free(assets->ceiling);
 	free(assets->floor);
+}
+
+void	free_map(t_map *map)
+{
+	free_2d((const char **)map->walls);
 }

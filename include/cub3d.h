@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/12 01:47:23 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/12 01:56:49 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ char				*gnl_no_nl(int fd);
 // free.c
 void				free_2d(const char **obj);
 void				free_assets(t_assets *assets);
+void				free_map(t_map *map);
 
 // parser/*.c
 void				parse(char *filename, t_ctx *ctx);
