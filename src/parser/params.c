@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/11 16:11:49 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/11 16:18:21 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,6 @@ static mlx_texture_t	*get_texture(const char **parts, char *line)
 
 static int	*get_color(const char **parts, char *line)
 {
-	// int		value;
-	// char	**start;
-
-	// start = parts;
-	// while (*parts)
-	// {
-	// 	if (**parts != '\0' && !ft_isdigit(**parts))
-	// 	{
-	// 		free_2d(start);
-	// 		free(line);
-			
-	// 	}
-	// }
 	return (malloc(sizeof(int)));
 }
 
