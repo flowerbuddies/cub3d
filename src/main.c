@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:22:30 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/11 17:45:33 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/11 23:46:36 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		error(NULL, "Invalid number of arguments");
-	parse(av[1], &ctx.assets);
+	parse(av[1], &ctx);
 	// TODO: may not be necessary when we get the graphics part as when linked to ctx.mlx they might be freed automatically
 	free_assets(&ctx.assets);
 	// map.mlx = mlx_init(WIDTH, HEIGHT, "cub3d!", true);

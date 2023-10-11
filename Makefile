@@ -21,6 +21,7 @@ SRCS := $(addprefix $(SRCS_DIR)/,\
 	free.c\
 	parser/parser.c\
 	parser/params.c\
+	parser/map.c\
 )
 OBJS := $(patsubst $(SRCS_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 OBJS_DIRS := $(sort $(dir $(OBJS)))

@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/11 18:42:06 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/12 01:38:44 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,17 +106,14 @@ static void	parse_param(char *line, t_assets *assets)
 
 void	parse_params(int fd, t_assets *assets)
 {
-	char	*raw_line;
 	char	*line;
 
 	while (!(assets->north && assets->south && assets->east && assets->west
 			&& assets->ceiling && assets->floor))
 	{
-		raw_line = get_next_line(fd);
-		if (!raw_line)
+		line = gnl_no_nl(fd);
+		if (!line)
 			error(NULL, "Parameters not satisfied");
-		line = ft_substr(raw_line, 0, ft_strlen(raw_line) - 1);
-		free(raw_line);
 		parse_param(line, assets);
 	}
 }

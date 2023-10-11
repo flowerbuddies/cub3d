@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/11 17:28:42 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/12 01:47:23 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,18 @@ typedef struct s_minimap
 	const int		height;
 }					t_minimap;
 
+typedef struct s_map
+{
+	bool			**walls;
+	// TODO: maybe smth like player vec
+}					t_map;
+
 typedef struct s_ctx
 {
 	mlx_t			*mlx;
 	t_assets		assets;
 	t_minimap		mini;
+	t_map			map;
 
 }					t_ctx;
 
@@ -55,13 +62,15 @@ int					len_2d(const char **obj);
 bool				streq(const char *s1, const char *s2);
 int					open_file(char *filename);
 int					error(mlx_t *mlx, char *message);
+char				*gnl_no_nl(int fd);
 
 // free.c
 void				free_2d(const char **obj);
 void				free_assets(t_assets *assets);
 
 // parser/*.c
-void				parse(char *filename, t_assets *assets);
+void				parse(char *filename, t_ctx *ctx);
 void				parse_params(int fd, t_assets *assets);
+void				parse_map(int fd, t_map *map);
 
 #endif

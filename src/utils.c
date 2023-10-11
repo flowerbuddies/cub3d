@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/11 17:27:53 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/12 01:44:47 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,23 @@ int	error(mlx_t *mlx, char *message)
 		ft_putstr_fd(strerror(errno), 2);
 	ft_putchar_fd('\n', 2);
 	exit(EXIT_FAILURE);
+}
+
+char	*gnl_no_nl(int fd)
+{
+	char	*line;
+	int		len;
+	char	*new_line;
+
+	line = get_next_line(fd);
+	if (!line)
+		return (NULL);
+	len = ft_strlen(line);
+	if (line[len - 1] != '\n')
+		return (line);
+	new_line = ft_substr(line, 0, len - 1);
+	if (!new_line)
+		error(NULL, NULL);
+	free(line);
+	return (new_line);
 }

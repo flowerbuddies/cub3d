@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/11 17:24:40 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/12 00:55:05 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,15 @@ static void	check_filename(char *filename)
 		error(NULL, "Invalid file name");
 }
 
-void	parse(char *filename, t_assets *assets)
+void	parse(char *filename, t_ctx *ctx)
 {
 	int	fd;
 
 	check_filename(filename);
 	fd = open_file(filename);
-	ft_bzero(assets, sizeof(t_assets));
-	parse_params(fd, assets);
+	ft_bzero(&ctx->assets, sizeof(t_assets));
+	parse_params(fd, &ctx->assets);
+	parse_map(fd, &ctx->map);
 	if (close(fd) == -1)
 		error(NULL, NULL);
 }
