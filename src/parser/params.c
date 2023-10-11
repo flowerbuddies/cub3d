@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   params.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/10 19:28:33 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/11 15:18:08 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,18 @@
 static mlx_texture_t	*get_texture(const char **parts, char *line)
 {
 	mlx_texture_t	*out;
+	char			*newline;
 
-	if (len_2d(parts) != 3 || !streq(parts[2], "\n")) //TODO:check `NO` but without map at the end
+	if (len_2d(parts) > 2 && !streq(parts[2], "\n")) //TODO:check `NO` but without map at the end
 	{
 		free_2d(parts);
 		free(line);
 		error(NULL, "Invalid parameter argument count");
 	}
+	newline = ft_strrchr(parts[1], '\n');
+	if (newline)
+		*newline = '\0';
+	printf("text path: %s\n", parts[1]);  //TODO: rm
 	out = mlx_load_png(parts[1]); //TODO:check `NO`
 	if (!out)
 	{
@@ -81,6 +86,7 @@ void	parse_params(int fd, t_assets *assets)
 		line = get_next_line(fd);
 		if (!line)
 			error(NULL, "Parameters not satisfied");
+		printf("line: _%s_", line); //TODO: rm
 		parse_param(line, assets);
 		free(line);
 	}

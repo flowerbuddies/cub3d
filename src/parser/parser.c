@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/10 19:03:31 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/11 14:57:28 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	parse(char *filename, t_assets *assets)
 
 	check_filename(filename);
 	fd = open_file(filename);
-	ft_bzero(assets, sizeof(assets));
+	// ft_bzero(assets, sizeof(assets));
+	ft_bzero(assets, 4 * sizeof(mlx_texture_t) + 2 * sizeof(int *));
 	parse_params(fd, assets);
-
 
 
 
