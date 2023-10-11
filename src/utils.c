@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/12 01:44:47 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/12 02:10:42 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	open_file(char *filename)
 	return (fd);
 }
 
-int	error(mlx_t *mlx, char *message)
+void	error(mlx_t *mlx, char *message)
 {
 	if (mlx)
 		mlx_close_window(mlx);

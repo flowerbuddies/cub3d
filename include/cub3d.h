@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/12 01:56:49 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/12 02:09:50 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ typedef struct s_ctx
 int					len_2d(const char **obj);
 bool				streq(const char *s1, const char *s2);
 int					open_file(char *filename);
-int					error(mlx_t *mlx, char *message);
+void				error(mlx_t *mlx, char *message);
 char				*gnl_no_nl(int fd);
 
 // free.c
