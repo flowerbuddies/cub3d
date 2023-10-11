@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/11 15:38:07 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/11 16:11:49 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static mlx_texture_t	*get_texture(const char **parts, char *line)
 	newline = ft_strrchr(parts[1], '\n');
 	if (newline)
 		*newline = '\0';
-	printf("text path: %s\n", parts[1]);  //TODO: rm
 	out = mlx_load_png(parts[1]); //TODO:check `NO`
 	if (!out)
 	{
@@ -39,6 +38,19 @@ static mlx_texture_t	*get_texture(const char **parts, char *line)
 
 static int	*get_color(const char **parts, char *line)
 {
+	// int		value;
+	// char	**start;
+
+	// start = parts;
+	// while (*parts)
+	// {
+	// 	if (**parts != '\0' && !ft_isdigit(**parts))
+	// 	{
+	// 		free_2d(start);
+	// 		free(line);
+			
+	// 	}
+	// }
 	return (malloc(sizeof(int)));
 }
 
@@ -52,9 +64,11 @@ static void	parse_param(char *line, t_assets *assets)
 {
 	const char	**parts = (const char **)ft_split(line, ' ');
 
+	// TODO: check empty file (gnl returns NULL?)
 	if (!parts)
 		error(NULL, NULL);
-	// TODO: check empty file (gnl returns NULL?)
+	if (*parts && **parts == '\n')
+		return (free_2d(parts));
 	if (streq(parts[0], "NO"))
 		assets->north = get_texture(parts, line);
 	else if (streq(parts[0], "SO"))
@@ -80,19 +94,13 @@ static void	parse_param(char *line, t_assets *assets)
 void	parse_params(int fd, t_assets *assets)
 {
 	char	*line;
-	char	*identifier;
 
 	while (!are_params_satisfied(assets))
 	{
 		line = get_next_line(fd);
 		if (!line)
 			error(NULL, "Parameters not satisfied");
-		identifier = line;
-		while (*identifier == ' ')
-			identifier++;
-		printf("identifier: _%s_", identifier); //TODO: rm
-		if (*identifier != '\n' && *identifier != '\0')
-			parse_param(identifier, assets);
+		parse_param(line, assets);
 		free(line);
 	}
 }
