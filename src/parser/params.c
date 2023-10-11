@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/11 17:37:32 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/11 18:42:06 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,34 +18,61 @@ static mlx_texture_t	*get_texture(const char **parts, char *line)
 
 	if (len_2d(parts) != 2)
 	{
-		free_2d(parts);
-		free(line);
-		error(NULL, "Invalid parameter argument count");
+		(free_2d(parts), free(line));
+		error(NULL, "Invalid NO/SO/EA/WE parameter argument count");
 	}
 	// TODO:check `NO` but without map at the end
 	out = mlx_load_png(parts[1]);
 	if (!out)
 	{
-		free_2d(parts);
-		free(line);
+		(free_2d(parts), free(line));
 		error(NULL, "Cannot load texture"); // TODO: fix error message
 	}
-	free_2d(parts);
-	free(line);
+	return (out);
+}
+
+static int	*channels_to_color(char **channels)
+{
+	const int	r = ft_atoi(channels[0]);
+	const int	g = ft_atoi(channels[1]);
+	const int	b = ft_atoi(channels[2]);
+	int			*out;
+
+	free_2d((const char **)channels);
+	if (r < 0 || r > 255 || g < 0 || g > 255 || b < 0 || b > 255)
+		return (NULL);
+	out = malloc(sizeof(int));
+	if (!out)
+		error(NULL, NULL);
+	*out = r << 24 | g << 16 | b << 8;
 	return (out);
 }
 
 static int	*get_color(const char **parts, char *line)
 {
-	free_2d(parts);
-	free(line);
-	return (malloc(sizeof(int)));
-}
+	char	**channels;
+	int		*color;
 
-static bool	are_params_satisfied(t_assets *assets)
-{
-	return (assets->north && assets->south && assets->east && assets->west
-		&& assets->ceiling && assets->floor);
+	if (len_2d(parts) != 2)
+	{
+		(free_2d(parts), free(line));
+		error(NULL, "Invalid C/F parameter argument count");
+	}
+	channels = ft_split(parts[1], ',');
+	if (!channels)
+		error(NULL, NULL);
+	if (len_2d((const char **)channels) != 3)
+	{
+		(free_2d((const char **)channels), free_2d(parts), free(line));
+		error(NULL, "Invalid number of color channels");
+	}
+	color = channels_to_color(channels);
+	if (!color)
+	{
+		(free_2d(parts), free(line));
+		error(NULL, "Invalid color channel range");
+	}
+	return (color);
 }
 
 static void	parse_param(char *line, t_assets *assets)
@@ -56,7 +83,7 @@ static void	parse_param(char *line, t_assets *assets)
 	if (!parts)
 		error(NULL, NULL);
 	else if (!*parts)
-		(free_2d(parts), free(line));
+		(void)parts;
 	else if (streq(parts[0], "NO"))
 		assets->north = get_texture(parts, line);
 	else if (streq(parts[0], "SO"))
@@ -74,6 +101,7 @@ static void	parse_param(char *line, t_assets *assets)
 		(free_2d(parts), free(line));
 		error(NULL, "Invalid parameter identifier/Parameters not satisfied");
 	}
+	(free_2d(parts), free(line));
 }
 
 void	parse_params(int fd, t_assets *assets)
@@ -81,7 +109,8 @@ void	parse_params(int fd, t_assets *assets)
 	char	*raw_line;
 	char	*line;
 
-	while (!are_params_satisfied(assets))
+	while (!(assets->north && assets->south && assets->east && assets->west
+			&& assets->ceiling && assets->floor))
 	{
 		raw_line = get_next_line(fd);
 		if (!raw_line)
