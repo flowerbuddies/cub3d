@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 20:42:32 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/12 01:54:06 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/12 16:06:13 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,50 +30,66 @@ static char	*skip_nl(int fd)
 	}
 }
 
-static void	append(bool ***arr, bool *el)
+static void init_tilemap(t_map *map, t_tile *tiles)
 {
-	bool	**out;
-	int		i;
-
-	i = 0;
-	while ((*arr)[i])
-		i++;
-	out = malloc(sizeof(bool *) * (i + 2));
-	if (!out)
-		error(NULL, NULL);
-	i = -1;
-	while ((*arr)[++i])
-		out[i] = (*arr)[i];
-	out[i++] = el;
-	out[i] = NULL;
-	free(*arr);
-	*arr = out;
+	map->tilemap = malloc(sizeof(t_tile *));
+	if (!map->tilemap)
+		error(NULL, "Failed to allocate tilemap");
+	map->tilemap[0] = tiles;
+	map->height = 1;
 }
 
-static bool	*parse_line(char *line)
+static void	append_tiles(t_map *map, t_tile *tiles)
 {
-	bool	*walls_line;
+	t_tile	**new_tilemap;
 	int		i;
 
-	walls_line = malloc(sizeof(bool) * ft_strlen(line));
+	if (!map->tilemap)
+		return (init_tilemap(map, tiles));
+	map->height++;
+	new_tilemap = malloc(sizeof(t_tile *) * map->height);
+	if (!new_tilemap)
+		error(NULL, "Failed to allocate tilemap");
+	i = -1;
+	while (++i < map->height - 1)
+		new_tilemap[i] = map->tilemap[i];
+	new_tilemap[i] = tiles;
+	free(map->tilemap);
+	map->tilemap = new_tilemap;
+}
+
+static t_tile	*get_tiles(t_map *map, char *line)
+{
+	t_tile	*tiles;
+	int		i;
+	const int	len = ft_strlen(line);
+
+	tiles = malloc(sizeof(t_tile) * len);
+	if (!tiles)
+		error(NULL, "failed to allocate tiles");
 	i = -1;
 	while (line[++i])
 	{
-		walls_line[i] = false;
-		if (line[i] == '1')
-			walls_line[i] = true;
-		else if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E'
-			|| line[i] == 'W')
-		{
-			// TODO: handle player vector/pos
-		}
-		else if (line[i] != '0' && line[i] != ' ')
-		{
-			// TODO: handle leaks
+		if (line[i] == ' ')
+			tiles[i] = SPACE;
+		else if (line[i] == '0')
+			tiles[i] = FLOOR;
+		else if (line[i] == '1')
+			tiles[i] = WALL;
+		else if (line[i] == 'N')
+			tiles[i] = NORTH;
+		else if (line[i] == 'S')
+			tiles[i] = SOUTH;
+		else if (line[i] == 'E')
+			tiles[i] = EAST;
+		else if (line[i] == 'W')
+			tiles[i] = WEST;
+		else
 			error(NULL, "Bad character in the map");
-		}
 	}
-	return (walls_line);
+	if (len > map->width)
+		map->width = len;
+	return (tiles);
 }
 
 void	parse_map(int fd, t_map *map)
@@ -83,10 +99,6 @@ void	parse_map(int fd, t_map *map)
 
 	line = skip_nl(fd);
 	seen_empty_line = false;
-	map->walls = malloc(sizeof(bool *));
-	if (!map->walls)
-		error(NULL, NULL);
-	map->walls[0] = NULL;
 	while (line)
 	{
 		if (!line[0])
@@ -94,7 +106,7 @@ void	parse_map(int fd, t_map *map)
 		else if (seen_empty_line)
 			error(NULL, "Empty line inside the map");
 		else
-			append(&map->walls, parse_line(line));
+			append_tiles(map, get_tiles(map, line));
 		free(line);
 		line = gnl_no_nl(fd);
 	}

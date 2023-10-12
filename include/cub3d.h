@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/12 02:09:50 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/12 14:38:54 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,24 @@ typedef struct s_minimap
 	const int		height;
 }					t_minimap;
 
+typedef enum e_tiles
+{
+	FLOOR,
+	WALL,
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST,
+	SPACE,
+	_END_TILES
+}	t_tile;
+
 typedef struct s_map
 {
-	bool			**walls;
-	// TODO: maybe smth like player vec
-}					t_map;
+	t_tile		**tilemap;
+	int			height;
+	int			width;
+}				t_map;
 
 typedef struct s_ctx
 {
