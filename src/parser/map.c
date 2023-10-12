@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 20:42:32 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/12 16:06:13 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/12 18:35:12 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ static void	append_tiles(t_map *map, t_tile *tiles)
 
 static t_tile	*get_tiles(t_map *map, char *line)
 {
-	t_tile	*tiles;
-	int		i;
+	t_tile		*tiles;
+	int			i;
 	const int	len = ft_strlen(line);
 
-	tiles = malloc(sizeof(t_tile) * len);
+	tiles = malloc(sizeof(t_tile) * (len + 1));
 	if (!tiles)
 		error(NULL, "failed to allocate tiles");
 	i = -1;
@@ -76,17 +76,13 @@ static t_tile	*get_tiles(t_map *map, char *line)
 			tiles[i] = FLOOR;
 		else if (line[i] == '1')
 			tiles[i] = WALL;
-		else if (line[i] == 'N')
+		else if (line[i] == 'N' || line[i] == 'S' 
+			|| line[i] == 'E' || line[i] == 'W')
 			tiles[i] = NORTH;
-		else if (line[i] == 'S')
-			tiles[i] = SOUTH;
-		else if (line[i] == 'E')
-			tiles[i] = EAST;
-		else if (line[i] == 'W')
-			tiles[i] = WEST;
 		else
 			error(NULL, "Bad character in the map");
 	}
+	tiles[i] = _END_TILES;
 	if (len > map->width)
 		map->width = len;
 	return (tiles);
