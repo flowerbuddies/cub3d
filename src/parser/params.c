@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/12 01:38:44 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/13 22:03:44 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,14 @@ static mlx_texture_t	*get_texture(const char **parts, char *line)
 
 	if (len_2d(parts) != 2)
 	{
-		(free_2d(parts), free(line));
+		(free_ctx(), free_2d(parts), free(line));
 		error(NULL, "Invalid NO/SO/EA/WE parameter argument count");
 	}
-	// TODO:check `NO` but without map at the end
 	out = mlx_load_png(parts[1]);
 	if (!out)
 	{
-		(free_2d(parts), free(line));
-		error(NULL, "Cannot load texture"); // TODO: fix error message
+		(free_ctx(), free_2d(parts), free(line));
+		error(NULL, "Cannot load texture");
 	}
 	return (out);
 }
@@ -55,7 +54,7 @@ static int	*get_color(const char **parts, char *line)
 
 	if (len_2d(parts) != 2)
 	{
-		(free_2d(parts), free(line));
+		(free_ctx(), free_2d(parts), free(line));
 		error(NULL, "Invalid C/F parameter argument count");
 	}
 	channels = ft_split(parts[1], ',');
@@ -63,13 +62,14 @@ static int	*get_color(const char **parts, char *line)
 		error(NULL, NULL);
 	if (len_2d((const char **)channels) != 3)
 	{
-		(free_2d((const char **)channels), free_2d(parts), free(line));
+		(free_2d((const char **)channels), free_ctx(), free_2d(parts),
+			free(line));
 		error(NULL, "Invalid number of color channels");
 	}
 	color = channels_to_color(channels);
 	if (!color)
 	{
-		(free_2d(parts), free(line));
+		(free_ctx(), free_2d(parts), free(line));
 		error(NULL, "Invalid color channel range");
 	}
 	return (color);
@@ -79,7 +79,6 @@ static void	parse_param(char *line, t_assets *assets)
 {
 	const char	**parts = (const char **)ft_split(line, ' ');
 
-	// TODO: check empty file (gnl returns NULL?)
 	if (!parts)
 		error(NULL, NULL);
 	else if (!*parts)
@@ -98,7 +97,7 @@ static void	parse_param(char *line, t_assets *assets)
 		assets->ceiling = get_color(parts, line);
 	else
 	{
-		(free_2d(parts), free(line));
+		(free_ctx(), free_2d(parts), free(line));
 		error(NULL, "Invalid parameter identifier/Parameters not satisfied");
 	}
 	(free_2d(parts), free(line));
