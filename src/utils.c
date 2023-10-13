@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/12 14:22:37 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/13 22:03:36 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,16 @@ char	*gnl_no_nl(int fd)
 		error(NULL, NULL);
 	free(line);
 	return (new_line);
+}
+
+t_vec2	*vec2(double x, double y)
+{
+	t_vec2	*out;
+
+	out = malloc(sizeof(t_vec2));
+	if (!out)
+		error(NULL, NULL);
+	out->x = x;
+	out->y = y;
+	return (out);
 }

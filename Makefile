@@ -22,8 +22,8 @@ SRCS := $(addprefix $(SRCS_DIR)/,\
 	parser/parser.c\
 	parser/params.c\
 	parser/map.c\
+	parser/map_closed.c\
 	parser/error.c\
-	parser/valid.c\
 )
 OBJS := $(patsubst $(SRCS_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 OBJS_DIRS := $(sort $(dir $(OBJS)))

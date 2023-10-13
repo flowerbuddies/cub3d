@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 17:27:38 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/13 20:17:09 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/13 22:05:43 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,8 @@ void	free_2d(const char **obj)
 	free(obj);
 }
 
-void	free_params(void)
+static void	free_params(const t_assets *assets)
 {
-	const t_assets	*assets = &get_ctx()->assets;
-
 	if (assets->north)
 		mlx_delete_texture(assets->north);
 	if (assets->south)
@@ -40,21 +38,29 @@ void	free_params(void)
 		free(assets->floor);
 }
 
-void	free_map(void)
+static void	free_map(const t_map *map)
 {
-	const t_map	*map = &get_ctx()->map;
-	int			i;
+	int	i;
 
-	free_params();
 	i = 0;
 	while (i < map->height)
 		free(map->tiles[i++]);
 	free(map->tiles);
 }
 
-t_free	*free_the(void)
+static void	free_player(const t_player *player)
 {
-	static t_free	free = {free_params, free_map};
+	if (player->dir)
+		free(player->dir);
+	if (player->pos)
+		free(player->pos);
+}
 
-	return (&free);
+void	free_ctx(void)
+{
+	const t_ctx	*ctx = get_ctx();
+
+	free_params(&ctx->assets);
+	free_map(&ctx->map);
+	free_player(&ctx->player);
 }
