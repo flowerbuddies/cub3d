@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 12:42:19 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/13 14:05:20 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/13 15:06:00 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ static void	check_vertical(t_map *map, int x, int y)
 {
 	int	next_len;
 
+	//TODO: errors leak map
 	if (y == 0)
 		error(NULL, "Unclosed map on upper edge");
 	if (y == map->height)
@@ -50,6 +51,20 @@ static void	check_vertical(t_map *map, int x, int y)
 	if (x >= next_len)
 		error(NULL, "Unclosed map due to short lower row");
 	if (map->tilemap[y - 1][x] == BOUNDS || map->tilemap[y + 1][x] == BOUNDS)
+		error(NULL, "Out of bounds inside map");
+}
+
+static void	check_horizontal(t_map *map, int x, int y)
+{
+	int	row_len;
+
+	//TODO: errors leak map
+	if (x == 0)
+		error(NULL, "Unclosed map on left edge");
+	row_len = get_row_len(map, y);
+	if (x + 1 == row_len)
+		error(NULL, "Unclosed map on right edge");
+	if (map->tilemap[y][x - 1] == BOUNDS || map->tilemap[y][x + 1] == BOUNDS)
 		error(NULL, "Out of bounds inside map");
 }
 
@@ -75,6 +90,7 @@ void	check_map_validity(t_map *map)
 				else if (tile == PLAYER && !found_player)
 					found_player = true;
 				check_vertical(map, x, y);
+				check_horizontal(map, x, y);
 			}
 		}
 	}
