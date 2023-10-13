@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 12:42:19 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/13 13:48:50 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/13 14:05:20 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,29 +35,21 @@ static int	get_row_len(t_map *map, int y)
 	return (len);
 }
 
-static void	check_up(t_map *map, int x, int y)
+static void	check_vertical(t_map *map, int x, int y)
 {
-	int	upper_len;
+	int	next_len;
 
 	if (y == 0)
 		error(NULL, "Unclosed map on upper edge");
-	upper_len = get_row_len(map, y - 1);
-	if (x >= upper_len)
-		error(NULL, "Unclosed map due to short upper row");
-	if (map->tilemap[y - 1][x] == BOUNDS)
-		error(NULL, "Out of bounds inside map");
-}
-
-static void	check_down(t_map *map, int x, int y)
-{
-	int	lower_len;
-
 	if (y == map->height)
 		error(NULL, "Unclosed map on lower edge");
-	lower_len = get_row_len(map, y + 1);
-	if (x >= lower_len)
+	next_len = get_row_len(map, y - 1);
+	if (x >= next_len)
+		error(NULL, "Unclosed map due to short upper row");
+	next_len = get_row_len(map, y + 1);
+	if (x >= next_len)
 		error(NULL, "Unclosed map due to short lower row");
-	if (map->tilemap[y + 1][x] == BOUNDS)
+	if (map->tilemap[y - 1][x] == BOUNDS || map->tilemap[y + 1][x] == BOUNDS)
 		error(NULL, "Out of bounds inside map");
 }
 
@@ -82,8 +74,7 @@ void	check_map_validity(t_map *map)
 					error(NULL, "Too many spawn points"); // TODO: free map
 				else if (tile == PLAYER && !found_player)
 					found_player = true;
-				check_up(map, x, y);
-				check_down(map, x, y);
+				check_vertical(map, x, y);
 			}
 		}
 	}
