@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   valid.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 12:42:19 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/13 15:06:00 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/13 20:41:26 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
 // from every 0 do 1 step of floodfill
 // if any reach X, invalid map
 
-
 // instead of get_row_len:
-// a) tilemap is array of t_row
+// a) tiles is array of t_row
 // struct s_row {
 // 	t_tile	*tiles;
 // 	int		len;
@@ -30,7 +29,7 @@ static int	get_row_len(t_map *map, int y)
 	int	len;
 
 	len = 0;
-	while (map->tilemap[y][len] != _END_TILE)
+	while (map->tiles[y][len] != _END_TILE)
 		len++;
 	return (len);
 }
@@ -39,33 +38,31 @@ static void	check_vertical(t_map *map, int x, int y)
 {
 	int	next_len;
 
-	//TODO: errors leak map
 	if (y == 0)
-		error(NULL, "Unclosed map on upper edge");
+		(free_the()->map(), error(NULL, "Unclosed map on upper edge"));
 	if (y == map->height)
-		error(NULL, "Unclosed map on lower edge");
+		(free_the()->map(), error(NULL, "Unclosed map on lower edge"));
 	next_len = get_row_len(map, y - 1);
 	if (x >= next_len)
-		error(NULL, "Unclosed map due to short upper row");
+		(free_the()->map(), error(NULL, "Unclosed map due to short upper row"));
 	next_len = get_row_len(map, y + 1);
 	if (x >= next_len)
-		error(NULL, "Unclosed map due to short lower row");
-	if (map->tilemap[y - 1][x] == BOUNDS || map->tilemap[y + 1][x] == BOUNDS)
-		error(NULL, "Out of bounds inside map");
+		(free_the()->map(), error(NULL, "Unclosed map due to short lower row"));
+	if (map->tiles[y - 1][x] == VOID || map->tiles[y + 1][x] == VOID)
+		(free_the()->map(), error(NULL, "Out of bounds inside map"));
 }
 
 static void	check_horizontal(t_map *map, int x, int y)
 {
 	int	row_len;
 
-	//TODO: errors leak map
 	if (x == 0)
-		error(NULL, "Unclosed map on left edge");
+		(free_the()->map(), error(NULL, "Unclosed map on left edge"));
 	row_len = get_row_len(map, y);
 	if (x + 1 == row_len)
-		error(NULL, "Unclosed map on right edge");
-	if (map->tilemap[y][x - 1] == BOUNDS || map->tilemap[y][x + 1] == BOUNDS)
-		error(NULL, "Out of bounds inside map");
+		(free_the()->map(), error(NULL, "Unclosed map on right edge"));
+	if (map->tiles[y][x - 1] == VOID || map->tiles[y][x + 1] == VOID)
+		(free_the()->map(), error(NULL, "Out of bounds inside map"));
 }
 
 void	check_map_validity(t_map *map)
@@ -80,13 +77,13 @@ void	check_map_validity(t_map *map)
 	while (++y < map->height)
 	{
 		x = -1;
-		while (++x < map->width && map->tilemap[y][x] != _END_TILE)
+		while (++x < map->width && map->tiles[y][x] != _END_TILE)
 		{
-			tile = map->tilemap[y][x];
+			tile = map->tiles[y][x];
 			if (tile == FLOOR || tile == PLAYER)
 			{
 				if (tile == PLAYER && found_player)
-					error(NULL, "Too many spawn points"); // TODO: free map
+					(free_the()->map(), error(NULL, "Too many spawn points"));
 				else if (tile == PLAYER && !found_player)
 					found_player = true;
 				check_vertical(map, x, y);

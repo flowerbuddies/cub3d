@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/13 13:51:09 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/13 19:43:03 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,16 @@ typedef enum e_tiles
 	FLOOR,
 	WALL,
 	PLAYER,
-	BOUNDS,
+	VOID,
 	_END_TILE
-}	t_tile;
+}					t_tile;
 
 typedef struct s_map
 {
-	t_tile		**tilemap;
-	int			height;
-	int			width;
-}				t_map;
+	t_tile			**tiles;
+	int				height;
+	int				width;
+}					t_map;
 
 typedef struct s_ctx
 {
@@ -67,17 +67,27 @@ typedef struct s_ctx
 
 }					t_ctx;
 
+typedef struct s_free
+{
+	void			(*params)(void);
+	void			(*map)(void);
+}					t_free;
+
+// main.c
+t_ctx				*get_ctx(void);
+
 // utils.c
 int					len_2d(const char **obj);
 bool				streq(const char *s1, const char *s2);
 int					open_file(char *filename);
-void				error(mlx_t *mlx, char *message);
 char				*gnl_no_nl(int fd);
+
+// error.c
+void				error(mlx_t *mlx, char *message);
 
 // free.c
 void				free_2d(const char **obj);
-void				free_assets(t_assets *assets);
-void				free_map(t_map *map);
+t_free				*free_the(void);
 
 // parser/*.c
 void				parse(char *filename, t_ctx *ctx);
