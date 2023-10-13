@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/13 13:51:09 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:28:33 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,25 +64,30 @@ typedef struct s_ctx
 	t_assets		assets;
 	t_minimap		mini;
 	t_map			map;
-
 }					t_ctx;
 
 // utils.c
 int					len_2d(const char **obj);
 bool				streq(const char *s1, const char *s2);
 int					open_file(char *filename);
-void				error(mlx_t *mlx, char *message);
-char				*gnl_no_nl(int fd);
+char				*gnl_no_nl(int fd, t_assets *assets);
+
+// mlx?
+void				error_mlx(mlx_t *mlx, char *message);
 
 // free.c
 void				free_2d(const char **obj);
 void				free_assets(t_assets *assets);
-void				free_map(t_map *map);
+void				free_tilemap(t_map *map);
 
 // parser/*.c
 void				parse(char *filename, t_ctx *ctx);
 void				parse_params(int fd, t_assets *assets);
-void				parse_map(int fd, t_map *map);
-void				check_map_validity(t_map *map);
+void				parse_map(int fd, t_ctx *ctx);
+void				check_map_validity(t_ctx *ctx);
+void				param_error(char *message, t_assets *assets, 
+						char *line, char **parts);
+void				map_error(char *message, t_ctx *ctx,
+						t_tile *tiles, char *line);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 17:27:38 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/12 18:42:31 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:28:13 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,28 @@ void	free_2d(const char **obj)
 
 void	free_assets(t_assets *assets)
 {
-	mlx_delete_texture(assets->north);
-	mlx_delete_texture(assets->south);
-	mlx_delete_texture(assets->east);
-	mlx_delete_texture(assets->west);
-	free(assets->ceiling);
-	free(assets->floor);
+	if (assets->north)
+		mlx_delete_texture(assets->north);
+	if (assets->south)
+		mlx_delete_texture(assets->south);
+	if (assets->east)
+		mlx_delete_texture(assets->east);
+	if (assets->west)
+		mlx_delete_texture(assets->west);
+	if (assets->ceiling)
+		free(assets->ceiling);
+	if (assets->floor)
+		free(assets->floor);
 }
 
-void	free_map(t_map *map)
+void	free_tilemap(t_map *map)
 {
-	(void) map;
-	// free_2d((const char **)map->tilemap);
+	int	y;
+
+	y = -1;
+	if (!map->tilemap)
+		return ;
+	while (++y < map->height && map->tilemap[y])
+		free(map->tilemap[y]);
+	free(map->tilemap);
 }

@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:22:30 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/13 13:49:55 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:25:54 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ static void	debug_tilemap(t_map *map)
 				write(1, "#", 1);
 			else if (map->tilemap[y][x] == PLAYER)
 				write(1, "P", 1);
-			
 		}
 		write(1, "\n", 1);
 	}
@@ -37,12 +36,12 @@ int	main(int ac, char **av)
 	t_ctx	ctx;
 
 	if (ac != 2)
-		error(NULL, "Invalid number of arguments");
+		error_mlx(NULL, "Invalid number of arguments");
 	parse(av[1], &ctx);
 	// TODO: may not be necessary when we get the graphics part as when linked to ctx.mlx they might be freed automatically
 	debug_tilemap(&ctx.map);
 	free_assets(&ctx.assets);
-	free_map(&ctx.map);
+	free_tilemap(&ctx.map);
 
 	// map.mlx = mlx_init(WIDTH, HEIGHT, "cub3d!", true);
 	// if (!map.mlx)

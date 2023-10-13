@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/13 13:51:29 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:17:57 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static void	check_filename(char *filename)
 
 	ext = ft_strrchr(filename, '.');
 	if (!ext)
-		error(NULL, "Invalid file name");
+		param_error("Invalid file name", NULL, NULL, NULL);
 	if (ft_strlen(ext) != 4 || ft_strncmp(ext, ".cub\0", 4))
-		error(NULL, "Invalid file name");
+		param_error("Invalid file name", NULL, NULL, NULL);
 }
 
 void	parse(char *filename, t_ctx *ctx)
@@ -31,8 +31,8 @@ void	parse(char *filename, t_ctx *ctx)
 	fd = open_file(filename);
 	ft_bzero(&ctx->assets, sizeof(t_assets));
 	parse_params(fd, &ctx->assets);
-	parse_map(fd, &ctx->map);
-	check_map_validity(&ctx->map);
+	parse_map(fd, &ctx);
+	check_map_validity(ctx);
 	if (close(fd) == -1)
-		error(NULL, NULL);
+		param_error(NULL, &ctx->assets, NULL, NULL); //TODO: make sure strerror is working
 }

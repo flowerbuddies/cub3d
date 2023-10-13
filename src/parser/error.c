@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 14:22:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/12 14:31:49 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:29:56 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,44 @@
 // if (map_error_has_occured)
 // 	err.map("map failed", map, tiles);
 
-void	error(mlx_t *mlx, char *message)
+void	map_error(char *message, t_ctx *ctx, t_tile *tiles, char *line)
+{
+	if (ctx)
+	{
+		free_assets(&ctx->assets);
+		free_tilemap(&ctx->map);
+	}
+	if (tiles)
+		free(tiles);
+	if (line)
+		free(line);
+	ft_putstr_fd("Error\n", 2);
+	if (message)
+		ft_putstr_fd(message, 2);
+	else
+		ft_putstr_fd(strerror(errno), 2);
+	ft_putchar_fd('\n', 2);
+	exit(EXIT_FAILURE);
+}
+
+void	param_error(char *message, t_assets *assets, char *line, char **parts)
+{
+	if (assets)
+		free_assets(assets);
+	if (line)
+		free(line);
+	if (parts)
+		free_2d((const char **) parts);
+	ft_putstr_fd("Error\n", 2);
+	if (message)
+		ft_putstr_fd(message, 2);
+	else
+		ft_putstr_fd(strerror(errno), 2);
+	ft_putchar_fd('\n', 2);
+	exit(EXIT_FAILURE);
+}
+
+void	error_mlx(mlx_t *mlx, char *message)
 {
 	if (mlx)
 		mlx_close_window(mlx);

@@ -6,23 +6,23 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 20:42:32 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/13 13:25:11 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/13 17:23:00 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static char	*skip_nl(int fd)
+static char	*skip_nl(int fd, t_ctx *ctx)
 {
 	char	*line;
 
 	while (42)
 	{
-		line = gnl_no_nl(fd);
+		line = gnl_no_nl(fd, &ctx->assets);
 		if (!line)
 		{
 			// TODO: handle leaks
-			error(NULL, "No map found");
+			map_error("No map found", ctx, NULL, NULL);
 		}
 		if (line[0])
 			return (line);
@@ -30,35 +30,41 @@ static char	*skip_nl(int fd)
 	}
 }
 
-static void init_tilemap(t_map *map, t_tile *tiles)
+static void	init_tilemap(t_ctx *ctx, t_tile *tiles, char *line)
 {
-	map->tilemap = malloc(sizeof(t_tile *));
-	if (!map->tilemap)
-		error(NULL, "Failed to allocate tilemap");
-	map->tilemap[0] = tiles;
-	map->height = 1;
+	ctx->map.tilemap = malloc(sizeof(t_tile *));
+	if (!ctx->map.tilemap)
+		map_error("Failed to allocate tilemap", ctx, tiles, line);
+	ctx->map.tilemap[0] = tiles;
+	ctx->map.height = 1;
 }
 
-static void	append_tiles(t_map *map, t_tile *tiles)
+static void	append_tiles(t_ctx *ctx, t_tile *tiles, char *line)
 {
 	t_tile	**new_tilemap;
 	int		i;
 
-	if (!map->tilemap)
-		return (init_tilemap(map, tiles));
-	map->height++;
-	new_tilemap = malloc(sizeof(t_tile *) * map->height);
+	if (!ctx->map.tilemap)
+		return (init_tilemap(ctx, tiles, line));
+	ctx->map.height++;
+	new_tilemap = malloc(sizeof(t_tile *) * ctx->map.height);
 	if (!new_tilemap)
-		error(NULL, "Failed to allocate tilemap");
+		map_error("Failed to allocate tilemap", ctx, tiles, line);
 	i = -1;
-	while (++i < map->height - 1)
-		new_tilemap[i] = map->tilemap[i];
+	while (++i < ctx->map.height - 1)
+		new_tilemap[i] = ctx->map.tilemap[i];
 	new_tilemap[i] = tiles;
-	free(map->tilemap);
-	map->tilemap = new_tilemap;
+	free(ctx->map.tilemap);
+	ctx->map.tilemap = new_tilemap;
 }
 
-static t_tile	*get_tiles(t_map *map, char *line)
+static void	update_tilemap_width(t_map *map, int len)
+{
+	if (len > map->width)
+		map->width = len;
+}
+
+static t_tile	*get_tiles(t_ctx *ctx, char *line)
 {
 	t_tile		*tiles;
 	int			i;
@@ -66,7 +72,7 @@ static t_tile	*get_tiles(t_map *map, char *line)
 
 	tiles = malloc(sizeof(t_tile) * (len + 1));
 	if (!tiles)
-		error(NULL, "failed to allocate tiles");
+		map_error("Failed to allocate tiles", ctx, NULL, line);
 	i = -1;
 	while (line[++i])
 	{
@@ -80,30 +86,29 @@ static t_tile	*get_tiles(t_map *map, char *line)
 			|| line[i] == 'E' || line[i] == 'W')
 			tiles[i] = PLAYER;
 		else
-			error(NULL, "Bad character in the map");
+			map_error("Bad character in the map", ctx, NULL, line);
 	}
 	tiles[i] = _END_TILE;
-	if (len > map->width)
-		map->width = len;
+	update_tilemap_width(&ctx->map, len);
 	return (tiles);
 }
 
-void	parse_map(int fd, t_map *map)
+void	parse_map(int fd, t_ctx *ctx)
 {
 	char	*line;
 	bool	seen_empty_line;
 
-	line = skip_nl(fd);
+	line = skip_nl(fd, ctx);
 	seen_empty_line = false;
 	while (line)
 	{
 		if (!line[0])
 			seen_empty_line = true;
 		else if (seen_empty_line)
-			error(NULL, "Empty line inside the map");
+			map_error("Empty line inside the map", ctx, NULL, line);
 		else
-			append_tiles(map, get_tiles(map, line));
+			append_tiles(ctx, get_tiles(ctx, line), line);
 		free(line);
-		line = gnl_no_nl(fd);
+		line = gnl_no_nl(fd, &ctx->assets);
 	}
 }
