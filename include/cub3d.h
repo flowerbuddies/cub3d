@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/12 14:38:54 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/13 13:51:09 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,9 @@ typedef enum e_tiles
 {
 	FLOOR,
 	WALL,
-	NORTH,
-	SOUTH,
-	EAST,
-	WEST,
-	SPACE,
-	_END_TILES
+	PLAYER,
+	BOUNDS,
+	_END_TILE
 }	t_tile;
 
 typedef struct s_map
@@ -86,5 +83,6 @@ void				free_map(t_map *map);
 void				parse(char *filename, t_ctx *ctx);
 void				parse_params(int fd, t_assets *assets);
 void				parse_map(int fd, t_map *map);
+void				check_map_validity(t_map *map);
 
 #endif

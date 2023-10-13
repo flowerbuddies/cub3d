@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 20:42:32 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/12 18:35:12 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/13 13:25:11 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,18 @@ static t_tile	*get_tiles(t_map *map, char *line)
 	while (line[++i])
 	{
 		if (line[i] == ' ')
-			tiles[i] = SPACE;
+			tiles[i] = BOUNDS;
 		else if (line[i] == '0')
 			tiles[i] = FLOOR;
 		else if (line[i] == '1')
 			tiles[i] = WALL;
 		else if (line[i] == 'N' || line[i] == 'S' 
 			|| line[i] == 'E' || line[i] == 'W')
-			tiles[i] = NORTH;
+			tiles[i] = PLAYER;
 		else
 			error(NULL, "Bad character in the map");
 	}
-	tiles[i] = _END_TILES;
+	tiles[i] = _END_TILE;
 	if (len > map->width)
 		map->width = len;
 	return (tiles);

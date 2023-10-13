@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 17:27:38 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/12 14:14:21 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/12 18:42:31 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@ void	free_assets(t_assets *assets)
 
 void	free_map(t_map *map)
 {
-	free_2d((const char **)map->tilemap);
+	(void) map;
+	// free_2d((const char **)map->tilemap);
 }

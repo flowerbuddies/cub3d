@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:22:30 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/12 18:43:54 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/13 13:49:55 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,22 +16,17 @@ static void	debug_tilemap(t_map *map)
 {
 	for (int y = 0; y < map->height; y++)
 	{
-		for (int x = 0; x < map->width && map->tilemap[y][x] != _END_TILES; x++)
+		for (int x = 0; x < map->width && map->tilemap[y][x] != _END_TILE; x++)
 		{
 			if (map->tilemap[y][x] == FLOOR)
 				write(1, "0", 1);
 			else if (map->tilemap[y][x] == WALL)
 				write(1, "1", 1);
-			else if (map->tilemap[y][x] == SPACE)
+			else if (map->tilemap[y][x] == BOUNDS)
 				write(1, "#", 1);
-			else if (map->tilemap[y][x] == NORTH)
-				write(1, "N", 1);
-			else if (map->tilemap[y][x] == SOUTH)
-				write(1, "S", 1);
-			else if (map->tilemap[y][x] == EAST)
-				write(1, "E", 1);
-			else if (map->tilemap[y][x] == WEST)
-				write(1, "W", 1);
+			else if (map->tilemap[y][x] == PLAYER)
+				write(1, "P", 1);
+			
 		}
 		write(1, "\n", 1);
 	}
