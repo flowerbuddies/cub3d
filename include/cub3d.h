@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/13 22:06:17 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/16 19:18:44 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,16 @@ typedef struct s_assets
 
 typedef struct s_minimap
 {
-	mlx_image_t		*image;
-	const int		width;
-	const int		height;
+	mlx_image_t		*img;
+	int				scale;
 }					t_minimap;
 
 typedef enum e_tiles
 {
+	_END_TILE = 0,
 	FLOOR,
 	WALL,
-	VOID,
-	_END_TILE
+	VOID
 }					t_tile;
 
 typedef struct s_map
@@ -100,5 +99,9 @@ void				parse(char *filename, t_ctx *ctx);
 void				parse_params(int fd, t_assets *assets);
 void				parse_map(int fd, t_ctx *ctx);
 void				check_map_validity(t_map *map);
+
+// minimap/*.c
+void				init_minimap(t_ctx *ctx);
+void				draw_minimap(t_ctx *ctx);
 
 #endif

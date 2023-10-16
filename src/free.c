@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 17:27:38 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/13 22:05:43 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/16 17:51:25 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	free_ctx(void)
 {
 	const t_ctx	*ctx = get_ctx();
 
+	if (ctx->mlx)
+		mlx_terminate(ctx->mlx);
 	free_params(&ctx->assets);
 	free_map(&ctx->map);
 	free_player(&ctx->player);

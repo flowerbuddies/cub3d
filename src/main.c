@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:22:30 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/13 22:18:31 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/16 19:19:36 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,28 @@ static void	debug_tilemap(t_map *map)
 			else if (map->tiles[y][x] == WALL)
 				write(1, "1", 1);
 			else if (map->tiles[y][x] == VOID)
-				write(1, "#", 1);
+				write(1, ".", 1);
 		}
 		write(1, "\n", 1);
 	}
 }
 
+// TODO maybe replace this by having a ref to ctx in all ctx fields,
+// ie: make `player->ctx` possible
 t_ctx	*get_ctx(void)
 {
 	static t_ctx	ctx;
 
 	return (&ctx);
+}
+
+static void	init_mlx(t_ctx *ctx)
+{
+	// TODO: try to use mlx_get_monitor_size
+	mlx_set_setting(MLX_STRETCH_IMAGE, true);
+	ctx->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", true);
+	if (!ctx->mlx)
+		error(NULL, NULL);
 }
 
 int	main(int ac, char **av)
@@ -45,18 +56,10 @@ int	main(int ac, char **av)
 	ctx = get_ctx();
 	ft_bzero(ctx, sizeof(*ctx));
 	parse(av[1], ctx);
-	debug_tilemap(&ctx->map);
+	debug_tilemap(&ctx->map); // TODO: rm
+	init_mlx(ctx);
+	init_minimap(ctx);
+	draw_minimap(ctx); // TODO: move
+	mlx_loop(ctx->mlx);
 	free_ctx();
-	// map.mlx = mlx_init(WIDTH, HEIGHT, "cub3d!", true);
-	// if (!map.mlx)
-	// 	return (error(NULL, NULL));
-	// map.mini.image = mlx_new_image(map.mlx, map.mini.width, map.mini.height);
-	// if (!map.mini.image)
-	// 	return (error(map.mlx, NULL));
-	// if (mlx_image_to_window(map.mlx, map.mini.image, 0, 0) == -1)
-	// 	return (error(map.mlx, NULL));
-	// // mlx_loop_hook(mlx, ft_randomize, mlx);
-	// // mlx_loop_hook(mlx, ft_hook, mlx);
-	// // mlx_loop(map.mlx);
-	// mlx_terminate(map.mlx);
 }

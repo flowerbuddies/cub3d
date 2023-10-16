@@ -24,6 +24,7 @@ SRCS := $(addprefix $(SRCS_DIR)/,\
 	parser/map.c\
 	parser/map_closed.c\
 	parser/error.c\
+	minimap/minimap.c\
 )
 OBJS := $(patsubst $(SRCS_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 OBJS_DIRS := $(sort $(dir $(OBJS)))
@@ -46,7 +47,7 @@ $(OBJS_DIRS):
 
 # Dependencies rules
 $(MLX42)/libmlx42.a:
-	@cmake lib/mlx42 -B $(MLX42)
+	@cmake lib/mlx42 -DDEBUG=1 -B $(MLX42) #TODO: rm -DDEBUG=1
 	@make -C $(MLX42) -j4
 
 $(LIBFT)/libft.a:

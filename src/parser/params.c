@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/13 22:03:44 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/16 19:18:29 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static mlx_texture_t	*get_texture(const char **parts, char *line)
 		(free_ctx(), free_2d(parts), free(line));
 		error(NULL, "Invalid NO/SO/EA/WE parameter argument count");
 	}
+	// TODO: support both XMP and PNG
 	out = mlx_load_png(parts[1]);
 	if (!out)
 	{
