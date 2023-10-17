@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 18:21:53 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/16 19:15:33 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/17 18:00:17 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,20 @@ static void	draw_point(t_minimap *mini, int x, int y, int color)
 	}
 }
 
+static int	min(int a, int b)
+{
+	if (a < b)
+		return (a);
+	return (b);
+}
+
 void	init_minimap(t_ctx *ctx)
 {
-	ctx->mini.scale = 10;
-	ctx->mini.img = mlx_new_image(ctx->mlx, ctx->map.width * ctx->mini.scale,
-			ctx->map.height * ctx->mini.scale);
+	const int	width = WIDTH * .25;
+	const int	height = HEIGHT * .25;
+
+	ctx->mini.scale = min(width / ctx->map.width, height / ctx->map.height);
+	ctx->mini.img = mlx_new_image(ctx->mlx, width, height);
 	if (!ctx->mini.img)
 		error(ctx->mlx, NULL);
 	mlx_image_to_window(ctx->mlx, ctx->mini.img, 0, 0);
@@ -50,17 +59,17 @@ void	draw_minimap(t_ctx *ctx)
 		trailing = false;
 		while (++x < ctx->map.width)
 		{
-			if (trailing)
-				draw_point(&ctx->mini, x, y, 0xeef2f3FF);
+			if (trailing || ctx->map.tiles[y][x] == VOID)
+				draw_point(&ctx->mini, x, y, MINIMAP_VOID_COLOR);
 			else if (ctx->map.tiles[y][x] == _END_TILE)
 			{
-				draw_point(&ctx->mini, x, y, 0xeef2f3FF);
+				--x;
 				trailing = true;
 			}
 			else if (ctx->map.tiles[y][x] == WALL)
-				draw_point(&ctx->mini, x, y, 0x9785bdFF);
+				draw_point(&ctx->mini, x, y, MINIMAP_WALL_COLOR);
 			else
-				draw_point(&ctx->mini, x, y, 0xeef2f3FF);
+				draw_point(&ctx->mini, x, y, MINIMAP_FLOOR_COLOR);
 		}
 	}
 }
