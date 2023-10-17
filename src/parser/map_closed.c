@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_valid.c                                        :+:      :+:    :+:   */
+/*   map_closed.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 12:42:19 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/13 22:11:42 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/17 15:14:21 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+static int	tiles_len(t_tile *tiles)
+{
+	int	i;
+
+	i = 0;
+	while (*tiles++)
+		i++;
+	return (i);
+}
+
 static bool	is_surrounded_by_walls(t_map *map, int x, int y)
 {
 	if (y == 0 || y == map->height)
+		return (false);
+	if (x > tiles_len(map->tiles[y - 1]) || x > tiles_len(map->tiles[y + 1]))
 		return (false);
 	if (map->tiles[y - 1][x] == VOID || map->tiles[y + 1][x] == VOID)
 		return (false);
