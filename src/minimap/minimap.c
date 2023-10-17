@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 18:21:53 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/17 18:00:17 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/17 19:51:51 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,31 @@ static int	min(int a, int b)
 
 void	init_minimap(t_ctx *ctx)
 {
-	const int	width = WIDTH * .25;
-	const int	height = HEIGHT * .25;
+	const double	width = WIDTH * .25;
+	const double	height = HEIGHT * .25;
 
 	ctx->mini.scale = min(width / ctx->map.width, height / ctx->map.height);
+	// if (ctx->mini.img)
+	// 	mlx_delete_image(ctx->mlx, ctx->mini.img);
 	ctx->mini.img = mlx_new_image(ctx->mlx, width, height);
 	if (!ctx->mini.img)
 		error(ctx->mlx, NULL);
 	mlx_image_to_window(ctx->mlx, ctx->mini.img, 0, 0);
+}
+
+void	resize_minimap(t_ctx *ctx, double factor)
+{
+	if (factor < 1)
+	{
+		if (ctx->mini.increased_count <= 0)
+			return ;
+		--ctx->mini.increased_count;
+	}
+	else
+		++ctx->mini.increased_count;
+	// int offset = ctx->mini.img->width * factor
+	mlx_resize_image(ctx->mini.img, ctx->mini.img->width + factor,
+		ctx->mini.img->height + factor);
 }
 
 void	draw_minimap(t_ctx *ctx)

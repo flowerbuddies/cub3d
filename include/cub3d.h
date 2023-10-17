@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/17 17:40:29 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/17 19:29:12 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define MINIMAP_FLOOR_COLOR 0xfffefbFF
 # define MINIMAP_WALL_COLOR 0xf7d0d5FF
 
+typedef void		(*t_hook)(void *);
+
 typedef struct s_vec2
 {
 	double			x;
@@ -47,7 +49,9 @@ typedef struct s_assets
 typedef struct s_minimap
 {
 	mlx_image_t		*img;
-	int				scale;
+	// TODO: better names for the two
+	double			scale;
+	int				increased_count;
 }					t_minimap;
 
 typedef enum e_tiles
@@ -97,6 +101,9 @@ void				error(mlx_t *mlx, char *message);
 void				free_2d(const char **obj);
 void				free_ctx(void);
 
+// keys.c
+void				keys_hook(t_ctx *ctx);
+
 // parser/*.c
 void				parse(char *filename, t_ctx *ctx);
 void				parse_params(int fd, t_assets *assets);
@@ -105,6 +112,7 @@ void				check_map_validity(t_map *map);
 
 // minimap/*.c
 void				init_minimap(t_ctx *ctx);
+void				resize_minimap(t_ctx *ctx, double factor);
 void				draw_minimap(t_ctx *ctx);
 
 #endif
