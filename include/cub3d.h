@@ -24,6 +24,9 @@
 
 # define WIDTH 1280
 # define HEIGHT 720
+# define MINIMAP_VOID_COLOR 0xd8e993FF
+# define MINIMAP_FLOOR_COLOR 0xfffefbFF
+# define MINIMAP_WALL_COLOR 0xf7d0d5FF
 
 typedef struct s_vec2
 {
