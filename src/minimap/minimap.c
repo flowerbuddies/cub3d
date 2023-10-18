@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 18:21:53 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/16 19:15:33 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/18 16:25:11 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,5 @@ void	draw_minimap(t_ctx *ctx)
 				draw_point(&ctx->mini, x, y, 0xeef2f3FF);
 		}
 	}
+	draw_player(ctx);
 }
