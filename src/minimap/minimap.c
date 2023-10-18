@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 18:21:53 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/17 18:00:17 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/18 18:12:20 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static int	min(int a, int b)
 
 void	init_minimap(t_ctx *ctx)
 {
-	const int	width = WIDTH * .25;
-	const int	height = HEIGHT * .25;
+	const int	width = WIDTH * .75;
+	const int	height = HEIGHT * .75;
 
 	ctx->mini.scale = min(width / ctx->map.width, height / ctx->map.height);
 	ctx->mini.img = mlx_new_image(ctx->mlx, width, height);

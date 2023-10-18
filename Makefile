@@ -26,6 +26,7 @@ SRCS := $(addprefix $(SRCS_DIR)/,\
 	parser/error.c\
 	minimap/minimap.c\
 	minimap/player.c\
+	raycast/raycast.c\
 )
 OBJS := $(patsubst $(SRCS_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 OBJS_DIRS := $(sort $(dir $(OBJS)))

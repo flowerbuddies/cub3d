@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/17 17:49:21 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/18 18:07:56 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "MLX42/MLX42.h"
 # include "libft.h"
 # include <fcntl.h>
+# include <limits.h>
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -24,9 +25,13 @@
 
 # define WIDTH 1280
 # define HEIGHT 720
+# define FOV .66
+# define BIG_DOUBLE 1e30
 # define MINIMAP_VOID_COLOR 0xd8e993FF
 # define MINIMAP_FLOOR_COLOR 0xfffefbFF
 # define MINIMAP_WALL_COLOR 0xf7d0d5FF
+
+typedef void		(*t_hook)(void *);
 
 typedef struct s_vec2
 {
@@ -69,6 +74,7 @@ typedef struct s_player
 {
 	t_vec2			*pos;
 	t_vec2			*dir;
+	t_vec2			*plane;
 }					t_player;
 
 typedef struct s_ctx
@@ -96,6 +102,11 @@ void				error(mlx_t *mlx, char *message);
 // free.c
 void				free_2d(const char **obj);
 void				free_ctx(void);
+
+// raycast/*.c
+void				raycast(t_ctx *ctx);
+void				init_raycast(t_ctx *ctx);
+t_vec2				*get_hit_pos(t_vec2 *pos, t_vec2 *ray_dir, double ray_len);
 
 // parser/*.c
 void				parse(char *filename, t_ctx *ctx);

@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:22:30 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/18 16:25:02 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/18 18:13:19 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,9 @@ int	main(int ac, char **av)
 	init_mlx(ctx);
 	init_minimap(ctx);
 	draw_minimap(ctx); // TODO: move
+	//
+	init_raycast(ctx);
+	mlx_loop_hook(ctx->mlx, (t_hook)raycast, ctx);
 	mlx_loop(ctx->mlx);
 	free_ctx();
 }
