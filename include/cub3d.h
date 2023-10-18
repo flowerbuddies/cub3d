@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/17 17:40:29 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/17 17:49:21 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,5 +106,6 @@ void				check_map_validity(t_map *map);
 // minimap/*.c
 void				init_minimap(t_ctx *ctx);
 void				draw_minimap(t_ctx *ctx);
+void				draw_player(t_ctx *ctx);
 
 #endif

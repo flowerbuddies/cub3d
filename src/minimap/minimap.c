@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 18:21:53 by hunam             #+#    #+#             */
 /*   Updated: 2023/10/17 18:00:17 by hunam            ###   ########.fr       */
@@ -72,4 +72,5 @@ void	draw_minimap(t_ctx *ctx)
 				draw_point(&ctx->mini, x, y, MINIMAP_FLOOR_COLOR);
 		}
 	}
+	draw_player(ctx);
 }
