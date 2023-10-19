@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 17:57:33 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/19 18:26:22 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/19 18:34:06 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ static void	draw_line(t_ctx *ctx, const t_vec2 *from, const t_vec2 *to)
 	b = init_bres(from, to);
 	while (42)
 	{
-		mlx_put_pixel(ctx->mini.img, b.x * ctx->mini.scale, b.y
-			* ctx->mini.scale, 0xFF000066);
+		mlx_put_pixel(ctx->mini.img, b.x, b.y, 0xFF000066);
 		if (b.x == (int)to->x && b.y == (int)to->y)
 			break ;
 		b.e2 = 2 * b.err;
@@ -58,6 +57,12 @@ static void	draw_line(t_ctx *ctx, const t_vec2 *from, const t_vec2 *to)
 void	draw_ray(t_ctx *ctx, t_vec2 *ray_dir, double ray_len)
 {
 	const t_vec2	*hit_pos = get_hit_pos(ctx->player.pos, ray_dir, ray_len);
+	const t_vec2	*from = vec2(ctx->player.pos->x * ctx->mini.scale,
+				ctx->player.pos->y * ctx->mini.scale);
+	const t_vec2	*to = vec2(hit_pos->x * ctx->mini.scale, hit_pos->y
+				* ctx->mini.scale);
 
-	draw_line(ctx, ctx->player.pos, hit_pos);
+	draw_line(ctx, from, to);
+	free((void *)from);
+	free((void *)to);
 }
