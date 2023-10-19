@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:40:14 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/18 19:00:45 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/19 16:09:22 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ static int	tiles_len(t_tile *tiles)
 void	init_raycast(t_ctx *ctx)
 {
 	ctx->player.plane = vec2(0.0, 0.7);
+	ctx->player.dda.side = vec2(0.0, 0.0);
+	ctx->player.dda.delta = vec2(0.0, 0.0);
+	ctx->player.dda.step = vec2_int(0, 0);
+	ctx->player.dda.cell = vec2_int(0, 0);
 }
 
 static double	dda(t_ctx *ctx, t_vec2 *ray_dir)
@@ -36,7 +40,6 @@ static double	dda(t_ctx *ctx, t_vec2 *ray_dir)
 	double	perp_wall_dist;
 	int		step_x;
 	int		step_y;
-	bool	hit;
 	bool	is_vertical_side;
 
 	// t_vec2	*step;
@@ -51,7 +54,6 @@ static double	dda(t_ctx *ctx, t_vec2 *ray_dir)
 	if (ray_dir->y != 0)
 		delta_dist->y = fabs(1 / ray_dir->y);
 	// step = vec2(0, 0);
-	hit = false;
 	is_vertical_side = false;
 	//
 	if (ray_dir->x < 0)
@@ -75,7 +77,8 @@ static double	dda(t_ctx *ctx, t_vec2 *ray_dir)
 		side_dist->y = (cell_y + 1.0 - ctx->player.pos->y) * delta_dist->y;
 	}
 	// cool separator
-	while (!hit)
+	// have max_iteration for safety
+	while (42)
 	{
 		if (side_dist->x < side_dist->y)
 		{
@@ -93,7 +96,7 @@ static double	dda(t_ctx *ctx, t_vec2 *ray_dir)
 		if (cell_y < ctx->map.height
 			&& cell_x < tiles_len(ctx->map.tiles[(int)cell_y])
 			&& ctx->map.tiles[(int)cell_y][(int)cell_x] == WALL)
-			hit = true;
+			break ;
 	}
 	if (!is_vertical_side)
 		perp_wall_dist = (side_dist->x - delta_dist->x);
@@ -107,11 +110,12 @@ t_vec2	*get_hit_pos(t_vec2 *pos, t_vec2 *ray_dir, double ray_len)
 	return (vec2(pos->x + ray_dir->x * ray_len, pos->y + ray_dir->y * ray_len));
 }
 
-static void	draw_hit(t_ctx *ctx, t_vec2 *hit_pos)
+static void	draw_hit(t_ctx *ctx, t_vec2 *ray_dir, double ray_len)
 {
-	const int	hit_size = ctx->mini.scale >> 3;
-	int			y;
-	int			x;
+	const t_vec2	*hit_pos = get_hit_pos(ctx->player.pos, ray_dir, ray_len);
+	const int		hit_size = ctx->mini.scale >> 3;
+	int				y;
+	int				x;
 
 	y = -hit_size;
 	while (++y < hit_size)
@@ -125,23 +129,21 @@ static void	draw_hit(t_ctx *ctx, t_vec2 *hit_pos)
 
 void	raycast(t_ctx *ctx)
 {
-	const double	max_rays = 10;
-	int				x;
+	const double	max_rays = 100;
+	double			ray;
 	double			camera_x;
 	t_vec2			*ray_dir;
 	double			ray_len;
-	t_vec2			*hit_pos;
 
-	x = -1;
-	while (++x < max_rays)
+	ray = -1;
+	ray_dir = vec2(0, 0);
+	while (++ray < max_rays)
 	{
-		camera_x = (2 * x / max_rays) - 1;
-		ray_dir = vec2(ctx->player.dir->x + ctx->player.plane->x * camera_x,
-				ctx->player.dir->y + ctx->player.plane->y * camera_x);
+		camera_x = (2.0 * ray / max_rays) - 1;
+		ray_dir->x = ctx->player.dir->x + ctx->player.plane->x * camera_x;
+		ray_dir->y = ctx->player.dir->y + ctx->player.plane->y * camera_x;
 		ray_len = dda(ctx, ray_dir);
-		hit_pos = get_hit_pos(ctx->player.pos, ray_dir, ray_len);
-		// mlx_put_pixel(ctx->mini.img, (int)(hit_pos->x * ctx->mini.scale),
-		// 	(int)(hit_pos->y * ctx->mini.scale), 0x00FF00FF);
-		draw_hit(ctx, hit_pos);
+		draw_hit(ctx, ray_dir, ray_len);
 	}
+	free(ray_dir);
 }

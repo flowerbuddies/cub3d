@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/18 18:07:56 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/19 16:03:35 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ typedef struct s_vec2
 	double			y;
 }					t_vec2;
 
+typedef struct s_vec2_int
+{
+	int				x;
+	int				y;
+}					t_vec2_int;
+
 typedef struct s_assets
 {
 	mlx_texture_t	*north;
@@ -70,11 +76,20 @@ typedef struct s_map
 	int				width;
 }					t_map;
 
+typedef struct s_dda
+{
+	t_vec2			*side;
+	t_vec2			*delta;
+	t_vec2_int		*step;
+	t_vec2_int		*cell;
+}					t_dda;
+
 typedef struct s_player
 {
 	t_vec2			*pos;
 	t_vec2			*dir;
 	t_vec2			*plane;
+	t_dda			dda;
 }					t_player;
 
 typedef struct s_ctx
@@ -95,6 +110,7 @@ bool				streq(const char *s1, const char *s2);
 int					open_file(char *filename);
 char				*gnl_no_nl(int fd);
 t_vec2				*vec2(double x, double y);
+t_vec2_int			*vec2_int(int x, int y);
 
 // error.c
 void				error(mlx_t *mlx, char *message);

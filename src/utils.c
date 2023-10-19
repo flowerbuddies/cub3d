@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/18 18:08:04 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/19 16:03:25 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,18 @@ t_vec2	*vec2(double x, double y)
 	t_vec2	*out;
 
 	out = malloc(sizeof(t_vec2));
+	if (!out)
+		error(NULL, NULL);
+	out->x = x;
+	out->y = y;
+	return (out);
+}
+
+t_vec2_int	*vec2_int(int x, int y)
+{
+	t_vec2_int	*out;
+
+	out = malloc(sizeof(t_vec2_int));
 	if (!out)
 		error(NULL, NULL);
 	out->x = x;
