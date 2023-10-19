@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/19 16:03:35 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:43:34 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ typedef struct s_ctx
 t_ctx				*get_ctx(void);
 
 // utils.c
+int					get_tiles_len(t_tile *tiles);
 int					len_2d(const char **obj);
 bool				streq(const char *s1, const char *s2);
 int					open_file(char *filename);
@@ -122,7 +123,7 @@ void				free_ctx(void);
 // raycast/*.c
 void				raycast(t_ctx *ctx);
 void				init_raycast(t_ctx *ctx);
-t_vec2				*get_hit_pos(t_vec2 *pos, t_vec2 *ray_dir, double ray_len);
+double				dda(t_ctx *ctx, t_vec2 *ray_dir);
 
 // parser/*.c
 void				parse(char *filename, t_ctx *ctx);

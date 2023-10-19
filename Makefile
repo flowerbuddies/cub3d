@@ -27,6 +27,7 @@ SRCS := $(addprefix $(SRCS_DIR)/,\
 	minimap/minimap.c\
 	minimap/player.c\
 	raycast/raycast.c\
+	raycast/dda.c\
 )
 OBJS := $(patsubst $(SRCS_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 OBJS_DIRS := $(sort $(dir $(OBJS)))

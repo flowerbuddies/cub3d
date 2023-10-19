@@ -6,11 +6,21 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/19 16:03:25 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:43:42 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	get_tiles_len(t_tile *tiles)
+{
+	int	i;
+
+	i = 0;
+	while (*tiles++)
+		i++;
+	return (i);
+}
 
 int	len_2d(const char **obj)
 {
