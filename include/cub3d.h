@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/19 17:43:34 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/19 18:21:12 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,18 @@ typedef struct s_map
 	int				width;
 }					t_map;
 
+typedef struct s_bres
+{
+	int				dx;
+	int				sx;
+	int				dy;
+	int				sy;
+	int				err;
+	int				e2;
+	int				x;
+	int				y;
+}					t_bres;
+
 typedef struct s_dda
 {
 	t_vec2			*side;
@@ -124,6 +136,8 @@ void				free_ctx(void);
 void				raycast(t_ctx *ctx);
 void				init_raycast(t_ctx *ctx);
 double				dda(t_ctx *ctx, t_vec2 *ray_dir);
+t_vec2				*get_hit_pos(t_vec2 *pos, t_vec2 *ray_dir, double ray_len);
+void				draw_ray(t_ctx *ctx, t_vec2 *ray_dir, double ray_len);
 
 // parser/*.c
 void				parse(char *filename, t_ctx *ctx);

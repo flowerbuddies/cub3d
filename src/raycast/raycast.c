@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:40:14 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/19 17:42:56 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/19 18:21:41 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	init_raycast(t_ctx *ctx)
 	ctx->player.dda.cell = vec2_int(0, 0);
 }
 
-static t_vec2	*get_hit_pos(t_vec2 *pos, t_vec2 *ray_dir, double ray_len)
+t_vec2	*get_hit_pos(t_vec2 *pos, t_vec2 *ray_dir, double ray_len)
 {
 	return (vec2(pos->x + ray_dir->x * ray_len, pos->y + ray_dir->y * ray_len));
 }
@@ -60,6 +60,7 @@ void	raycast(t_ctx *ctx)
 		ray_dir->y = ctx->player.dir->y + ctx->player.plane->y * camera_x;
 		ray_len = dda(ctx, ray_dir);
 		draw_hit(ctx, ray_dir, ray_len);
+		draw_ray(ctx, ray_dir, ray_len);
 	}
 	free(ray_dir);
 }
