@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:40:14 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/19 17:01:04 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:34:02 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,49 +30,63 @@ void	init_raycast(t_ctx *ctx)
 	ctx->player.dda.step = vec2_int(0, 0);
 	ctx->player.dda.cell = vec2_int(0, 0);
 }
-
-static double	dda(t_ctx *ctx, t_vec2 *ray_dir)
+static void	dda_check_dir(t_vec2 *ray_dir, const t_dda *dda, const t_vec2 *pos)
 {
-	const t_dda	*dda = &(ctx->player.dda);
-	double		perp_wall_dist;
-	bool		is_vertical_side;
-
-	dda->cell->x = ctx->player.pos->x;
-	dda->cell->y = ctx->player.pos->y;
-	dda->side->x = 0.0;
-	dda->side->y = 0.0;
-	dda->delta->x = BIG_DOUBLE;
-	dda->delta->y = BIG_DOUBLE;
 	if (ray_dir->x != 0)
-		dda->delta->x = fabs(1 / ray_dir->x);
+		dda->delta->x = fabs(1.0 / ray_dir->x);
 	if (ray_dir->y != 0)
-		dda->delta->y = fabs(1 / ray_dir->y);
-	is_vertical_side = false;
-	//
+		dda->delta->y = fabs(1.0 / ray_dir->y);
 	if (ray_dir->x < 0)
 	{
 		dda->step->x = -1.0;
-		dda->side->x = (ctx->player.pos->x - dda->cell->x) * dda->delta->x;
+		dda->side->x = (pos->x - dda->cell->x) * dda->delta->x;
 	}
 	else
 	{
 		dda->step->x = 1.0;
-		dda->side->x = (dda->cell->x + 1.0 - ctx->player.pos->x)
-			* dda->delta->x;
+		dda->side->x = ((dda->cell->x + 1.0 - pos->x) * dda->delta->x);
 	}
 	if (ray_dir->y < 0)
 	{
 		dda->step->y = -1.0;
-		dda->side->y = (ctx->player.pos->y - dda->cell->y) * dda->delta->y;
+		dda->side->y = (pos->y - dda->cell->y) * dda->delta->y;
 	}
 	else
 	{
 		dda->step->y = 1.0;
-		dda->side->y = (dda->cell->y + 1.0 - ctx->player.pos->y)
-			* dda->delta->y;
+		dda->side->y = (dda->cell->y + 1.0 - pos->y) * dda->delta->y;
 	}
-	// cool separator
-	// have max_iteration for safety
+}
+
+static void	init_dda(t_ctx *ctx, t_vec2 *ray_dir)
+{
+	const t_dda		*dda = &(ctx->player.dda);
+	const t_vec2	*pos = ctx->player.pos;
+
+	dda->cell->x = pos->x;
+	dda->cell->y = pos->y;
+	dda->side->x = 0.0;
+	dda->side->y = 0.0;
+	dda->delta->x = BIG_DOUBLE;
+	dda->delta->y = BIG_DOUBLE;
+	dda_check_dir(ray_dir, dda, pos);
+}
+
+static bool	has_hit_wall(t_ctx *ctx, const t_dda *dda)
+{
+	// TODO: care about _END_TILE
+	return (dda->cell->y < ctx->map.height
+		&& dda->cell->x < tiles_len(ctx->map.tiles[(int)dda->cell->y])
+		&& ctx->map.tiles[(int)dda->cell->y][(int)dda->cell->x] == WALL);
+}
+
+static double	dda(t_ctx *ctx, t_vec2 *ray_dir)
+{
+	const t_dda	*dda = &(ctx->player.dda);
+	bool		is_vertical_side;
+
+	is_vertical_side = false;
+	init_dda(ctx, ray_dir);
 	while (42)
 	{
 		if (dda->side->x < dda->side->y)
@@ -87,17 +101,13 @@ static double	dda(t_ctx *ctx, t_vec2 *ray_dir)
 			dda->cell->y += dda->step->y;
 			is_vertical_side = true;
 		}
-		// TODO: care about _END_TILE
-		if (dda->cell->y < ctx->map.height
-			&& dda->cell->x < tiles_len(ctx->map.tiles[(int)dda->cell->y])
-			&& ctx->map.tiles[(int)dda->cell->y][(int)dda->cell->x] == WALL)
+		// TODO: try to use !has_hit_wall in while condition (be careful that output is still correct)
+		if (has_hit_wall(ctx, dda))
 			break ;
 	}
 	if (!is_vertical_side)
-		perp_wall_dist = (dda->side->x - dda->delta->x);
-	else
-		perp_wall_dist = (dda->side->y - dda->delta->y);
-	return (perp_wall_dist);
+		return (dda->side->x - dda->delta->x);
+	return (dda->side->y - dda->delta->y);
 }
 
 t_vec2	*get_hit_pos(t_vec2 *pos, t_vec2 *ray_dir, double ray_len)
