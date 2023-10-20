@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/20 17:22:01 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/20 17:51:14 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@
 # define HEIGHT 720
 
 # define FOV .66
-# define MAX_RAYS 100
 # define BIG_DOUBLE 1e30
 
 # define MINIMAP_VOID_COLOR 0xd8e993FF
@@ -107,6 +106,7 @@ typedef struct s_player
 	t_vec2			*ray_dir;
 	t_vec2			*plane;
 	t_dda			dda;
+	mlx_image_t		*camera;
 }					t_player;
 
 typedef struct s_ctx
@@ -139,7 +139,7 @@ void				free_ctx(void);
 
 // raycast/*.c
 void				raycast(t_ctx *ctx);
-void				init_raycast(t_player *player);
+void				init_raycast(t_ctx *ctx);
 double				dda(t_ctx *ctx);
 t_vec2				*get_hit_pos(t_vec2 *pos, t_vec2 *ray_dir, double ray_len);
 void				draw_ray(t_ctx *ctx, double ray_len);

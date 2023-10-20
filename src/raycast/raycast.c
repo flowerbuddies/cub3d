@@ -6,20 +6,25 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:40:14 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/20 17:22:01 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/20 17:55:51 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void	init_raycast(t_player *player)
+void	init_raycast(t_ctx *ctx)
 {
-	player->plane = vec2(0, FOV);
-	player->ray_dir = vec2(0, 0);
-	player->dda.cell = vec2_int(0, 0);
-	player->dda.side_dist = vec2(0, 0);
-	player->dda.delta_dist = vec2(0, 0);
-	player->dda.step_dir = vec2_int(0, 0);
+	ctx->player.plane = vec2(0, FOV);
+	ctx->player.ray_dir = vec2(0, 0);
+	ctx->player.dda.cell = vec2_int(0, 0);
+	ctx->player.dda.side_dist = vec2(0, 0);
+	ctx->player.dda.delta_dist = vec2(0, 0);
+	ctx->player.dda.step_dir = vec2_int(0, 0);
+	ctx->player.camera = mlx_new_image(ctx->mlx, WIDTH, HEIGHT);
+	if (!ctx->player.camera)
+		error(ctx->mlx, NULL);
+	if (mlx_image_to_window(ctx->mlx, ctx->player.camera, 0, 0) == -1)
+		error(ctx->mlx, NULL);
 }
 
 t_vec2	*get_hit_pos(t_vec2 *pos, t_vec2 *ray_dir, double ray_len)
@@ -46,6 +51,22 @@ static void	draw_hit(t_ctx *ctx, double ray_len)
 	free((void *)hit_pos);
 }
 
+static void	draw_vert_strips(t_ctx *ctx, int x, double ray_len)
+{
+	const int	line_height = (HEIGHT / ray_len);
+	int			draw_start;
+	int			draw_end;
+
+	draw_start = -line_height / 2 + HEIGHT / 2;
+	if (draw_start < 0)
+		draw_start = 0;
+	draw_end = line_height / 2 + HEIGHT / 2;
+	if (draw_end >= HEIGHT)
+		draw_end = HEIGHT - 1;
+	while (draw_start < draw_end)
+		mlx_put_pixel(ctx->player.camera, x, draw_start++, MINIMAP_WALL_COLOR);
+}
+
 void	raycast(t_ctx *ctx)
 {
 	double	ray;
@@ -53,9 +74,9 @@ void	raycast(t_ctx *ctx)
 	double	ray_len;
 
 	ray = -1;
-	while (++ray < MAX_RAYS)
+	while (++ray < WIDTH)
 	{
-		camera_x = 2.0 * ray / MAX_RAYS - 1;
+		camera_x = 2.0 * ray / WIDTH - 1;
 		ctx->player.ray_dir->x = ctx->player.dir->x + ctx->player.plane->x
 			* camera_x;
 		ctx->player.ray_dir->y = ctx->player.dir->y + ctx->player.plane->y
@@ -63,5 +84,6 @@ void	raycast(t_ctx *ctx)
 		ray_len = dda(ctx);
 		draw_hit(ctx, ray_len);
 		draw_ray(ctx, ray_len);
+		draw_vert_strips(ctx, ray, ray_len);
 	}
 }

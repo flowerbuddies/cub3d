@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 18:21:53 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/18 18:12:20 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:35:19 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	init_minimap(t_ctx *ctx)
 	ctx->mini.img = mlx_new_image(ctx->mlx, width, height);
 	if (!ctx->mini.img)
 		error(ctx->mlx, NULL);
-	mlx_image_to_window(ctx->mlx, ctx->mini.img, 0, 0);
+	if (mlx_image_to_window(ctx->mlx, ctx->mini.img, 0, 0) == -1)
+		error(ctx->mlx, NULL);
 }
 
 void	draw_minimap(t_ctx *ctx)
