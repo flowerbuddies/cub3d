@@ -3,6 +3,7 @@
   "files.associations": {
     "*.h": "c",
     "locale": "c",
-    "complex": "c"
+    "complex": "c",
+    "ios": "c"
   }
 }

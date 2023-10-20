@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 18:21:53 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/20 18:42:50 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/20 20:43:58 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,15 @@ static int	min(int a, int b)
 
 void	init_minimap(t_ctx *ctx)
 {
-	const int	width = WIDTH * .75;
-	const int	height = HEIGHT * .75;
-
-	ctx->mini.scale = min(width / ctx->map.width, height / ctx->map.height);
-	ctx->mini.img = mlx_new_image(ctx->mlx, width, height);
+	ctx->mini.scale = min(WIDTH * MINIMAP_SIZE / ctx->map.width, HEIGHT
+			* MINIMAP_SIZE / ctx->map.height);
+	ctx->mini.img = mlx_new_image(ctx->mlx, ctx->mini.scale * ctx->map.width,
+			ctx->mini.scale * ctx->map.height);
 	if (!ctx->mini.img)
 		error(ctx->mlx, NULL);
 	if (mlx_image_to_window(ctx->mlx, ctx->mini.img, 0, 0) == -1)
 		error(ctx->mlx, NULL);
-	// TODO: add: ++ctx->mini.img->instances[0].z;
+	++ctx->mini.img->instances[0].z;
 }
 
 void	draw_minimap(t_ctx *ctx)
