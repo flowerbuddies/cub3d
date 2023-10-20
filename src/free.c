@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 17:27:38 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/19 16:06:23 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:26:24 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ static void	free_player(const t_player *player)
 		free(player->dir);
 	if (player->pos)
 		free(player->pos);
+	if (player->ray_dir)
+		free(player->ray_dir);
+	if (player->plane)
+		free(player->plane);
 	if (player->dda.side)
 		free(player->dda.side);
 	if (player->dda.delta)

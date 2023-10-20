@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 17:38:54 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/19 17:44:03 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:28:33 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	dda_check_dir(t_vec2 *ray_dir, const t_dda *dda, const t_vec2 *pos)
 	}
 }
 
-static void	init_dda(t_ctx *ctx, t_vec2 *ray_dir)
+static void	init_dda(t_ctx *ctx)
 {
 	const t_dda		*dda = &(ctx->player.dda);
 	const t_vec2	*pos = ctx->player.pos;
@@ -51,7 +51,7 @@ static void	init_dda(t_ctx *ctx, t_vec2 *ray_dir)
 	dda->side->y = 0.0;
 	dda->delta->x = BIG_DOUBLE;
 	dda->delta->y = BIG_DOUBLE;
-	dda_check_dir(ray_dir, dda, pos);
+	dda_check_dir(ctx->player.ray_dir, dda, pos);
 }
 
 static bool	has_hit_wall(t_ctx *ctx, const t_dda *dda)
@@ -62,13 +62,13 @@ static bool	has_hit_wall(t_ctx *ctx, const t_dda *dda)
 		&& ctx->map.tiles[(int)dda->cell->y][(int)dda->cell->x] == WALL);
 }
 
-double	dda(t_ctx *ctx, t_vec2 *ray_dir)
+double	dda(t_ctx *ctx)
 {
 	const t_dda	*dda = &(ctx->player.dda);
 	bool		is_vertical_side;
 
 	is_vertical_side = false;
-	init_dda(ctx, ray_dir);
+	init_dda(ctx);
 	while (!has_hit_wall(ctx, dda))
 	{
 		if (dda->side->x < dda->side->y)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/19 18:21:12 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:30:25 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,11 @@
 
 # define WIDTH 1280
 # define HEIGHT 720
+
 # define FOV .66
+# define MAX_RAYS 100
 # define BIG_DOUBLE 1e30
+
 # define MINIMAP_VOID_COLOR 0xd8e993FF
 # define MINIMAP_FLOOR_COLOR 0xfffefbFF
 # define MINIMAP_WALL_COLOR 0xf7d0d5FF
@@ -100,6 +103,8 @@ typedef struct s_player
 {
 	t_vec2			*pos;
 	t_vec2			*dir;
+	// TODO: maybe move these fields
+	t_vec2			*ray_dir;
 	t_vec2			*plane;
 	t_dda			dda;
 }					t_player;
@@ -134,10 +139,10 @@ void				free_ctx(void);
 
 // raycast/*.c
 void				raycast(t_ctx *ctx);
-void				init_raycast(t_ctx *ctx);
-double				dda(t_ctx *ctx, t_vec2 *ray_dir);
+void				init_raycast(t_player *player);
+double				dda(t_ctx *ctx);
 t_vec2				*get_hit_pos(t_vec2 *pos, t_vec2 *ray_dir, double ray_len);
-void				draw_ray(t_ctx *ctx, t_vec2 *ray_dir, double ray_len);
+void				draw_ray(t_ctx *ctx, double ray_len);
 
 // parser/*.c
 void				parse(char *filename, t_ctx *ctx);

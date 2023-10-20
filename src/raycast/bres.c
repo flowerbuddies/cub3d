@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bres.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 17:57:33 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/19 18:34:06 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:35:20 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,15 +54,17 @@ static void	draw_line(t_ctx *ctx, const t_vec2 *from, const t_vec2 *to)
 	}
 }
 
-void	draw_ray(t_ctx *ctx, t_vec2 *ray_dir, double ray_len)
+void	draw_ray(t_ctx *ctx, double ray_len)
 {
-	const t_vec2	*hit_pos = get_hit_pos(ctx->player.pos, ray_dir, ray_len);
+	const t_vec2	*hit_pos = get_hit_pos(ctx->player.pos, ctx->player.ray_dir,
+				ray_len);
 	const t_vec2	*from = vec2(ctx->player.pos->x * ctx->mini.scale,
 				ctx->player.pos->y * ctx->mini.scale);
 	const t_vec2	*to = vec2(hit_pos->x * ctx->mini.scale, hit_pos->y
 				* ctx->mini.scale);
 
 	draw_line(ctx, from, to);
+	free((void *)hit_pos);
 	free((void *)from);
 	free((void *)to);
 }

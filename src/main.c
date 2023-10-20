@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:22:30 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/18 18:13:19 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/20 16:24:26 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	main(int ac, char **av)
 	init_minimap(ctx);
 	draw_minimap(ctx); // TODO: move
 	//
-	init_raycast(ctx);
+	init_raycast(&ctx->player);
 	mlx_loop_hook(ctx->mlx, (t_hook)raycast, ctx);
 	mlx_loop(ctx->mlx);
 	free_ctx();
