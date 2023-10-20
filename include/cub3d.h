@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/20 18:41:34 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/20 20:20:18 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,8 +131,9 @@ t_vec2				*vec2(double x, double y);
 t_vec2_int			*vec2_int(int x, int y);
 void				clear_img(mlx_image_t *img);
 
-// keys.c
+// hooks.c
 void				keys_hook(t_ctx *ctx);
+void				cursor_hook(double xpos, double ypos, t_ctx *ctx);
 
 // error.c
 void				error(mlx_t *mlx, char *message);

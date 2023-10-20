@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:22:30 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/20 18:21:29 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/20 20:27:44 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	main(int ac, char **av)
 	draw_minimap(ctx); // TODO: move
 	//
 	init_raycast(ctx);
+	mlx_cursor_hook(ctx->mlx, (mlx_cursorfunc)cursor_hook, ctx);
 	mlx_loop_hook(ctx->mlx, (t_hook)keys_hook, ctx);
 	mlx_loop_hook(ctx->mlx, (t_hook)raycast, ctx);
 	mlx_loop(ctx->mlx);

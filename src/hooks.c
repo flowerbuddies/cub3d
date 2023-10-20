@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   keys.c                                             :+:      :+:    :+:   */
+/*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 18:06:36 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/20 18:41:58 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/20 20:26:21 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,15 @@ void	keys_hook(t_ctx *ctx)
 		rot_cam(&ctx->player, -rot_speed);
 	if (mlx_is_key_down(ctx->mlx, MLX_KEY_RIGHT))
 		rot_cam(&ctx->player, rot_speed);
+	if (mlx_is_key_down(ctx->mlx, MLX_KEY_ESCAPE))
+		(free_ctx(), exit(0));
+}
+
+void	cursor_hook(double x, double y, t_ctx *ctx)
+{
+	static double	old_x = WIDTH / 2;
+
+	(void)y;
+	rot_cam(&ctx->player, (x - old_x) / 200);
+	old_x = x;
 }

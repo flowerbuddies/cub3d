@@ -13,12 +13,13 @@ CFLAGS += -Iinclude -Ilib/mlx42/include -I$(LIBFT) #includes
 LIBS := -L$(MLX42) -lmlx42 #MLX42
 LIBS += -L$(BREW)/Cellar/glfw/3.3.8/lib -lglfw #GLFW
 LIBS += -L$(LIBFT) -lft #libft
+LIBS += -lm #math
 
 # Source files
 SRCS := $(addprefix $(SRCS_DIR)/,\
 	main.c\
 	utils.c\
-	keys.c\
+	hooks.c\
 	free.c\
 	parser/parser.c\
 	parser/params.c\

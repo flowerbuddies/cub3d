@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:40:14 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/20 17:57:57 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/20 18:45:39 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ static void	draw_hit(t_ctx *ctx, double ray_len)
 	{
 		x = -hit_size;
 		while (++x < hit_size)
-			mlx_put_pixel(ctx->mini.img, (int)(hit_pos->x * ctx->mini.scale)
-				+ x, (int)(hit_pos->y * ctx->mini.scale) + y, 0x00FF00FF);
+			mlx_put_pixel(ctx->mini.img, hit_pos->x * ctx->mini.scale + x,
+				hit_pos->y * ctx->mini.scale + y, 0x00FF00FF);
 	}
 	free((void *)hit_pos);
 }
