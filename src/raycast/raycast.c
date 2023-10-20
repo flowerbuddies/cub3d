@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:40:14 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/20 16:36:08 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/20 17:22:01 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 void	init_raycast(t_player *player)
 {
-	player->ray_dir = vec2(0, 0);
 	player->plane = vec2(0, FOV);
-	player->dda.side = vec2(0, 0);
-	player->dda.delta = vec2(0, 0);
-	player->dda.step = vec2_int(0, 0);
+	player->ray_dir = vec2(0, 0);
 	player->dda.cell = vec2_int(0, 0);
+	player->dda.side_dist = vec2(0, 0);
+	player->dda.delta_dist = vec2(0, 0);
+	player->dda.step_dir = vec2_int(0, 0);
 }
 
 t_vec2	*get_hit_pos(t_vec2 *pos, t_vec2 *ray_dir, double ray_len)
@@ -55,7 +55,7 @@ void	raycast(t_ctx *ctx)
 	ray = -1;
 	while (++ray < MAX_RAYS)
 	{
-		camera_x = (2.0 * ray / MAX_RAYS) - 1;
+		camera_x = 2.0 * ray / MAX_RAYS - 1;
 		ctx->player.ray_dir->x = ctx->player.dir->x + ctx->player.plane->x
 			* camera_x;
 		ctx->player.ray_dir->y = ctx->player.dir->y + ctx->player.plane->y

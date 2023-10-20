@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/20 16:30:25 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/20 17:22:01 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,9 @@ typedef struct s_bres
 
 typedef struct s_dda
 {
-	t_vec2			*side;
-	t_vec2			*delta;
-	t_vec2_int		*step;
+	t_vec2			*side_dist;
+	t_vec2			*delta_dist;
+	t_vec2_int		*step_dir;
 	t_vec2_int		*cell;
 }					t_dda;
 

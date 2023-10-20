@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 17:38:54 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/20 16:28:33 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/20 17:22:41 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,52 +14,48 @@
 
 static void	dda_check_dir(t_vec2 *ray_dir, const t_dda *dda, const t_vec2 *pos)
 {
-	if (ray_dir->x != 0)
-		dda->delta->x = fabs(1.0 / ray_dir->x);
-	if (ray_dir->y != 0)
-		dda->delta->y = fabs(1.0 / ray_dir->y);
 	if (ray_dir->x < 0)
 	{
-		dda->step->x = -1.0;
-		dda->side->x = (pos->x - dda->cell->x) * dda->delta->x;
+		dda->step_dir->x = -1;
+		dda->side_dist->x = (pos->x - dda->cell->x) * dda->delta_dist->x;
 	}
 	else
 	{
-		dda->step->x = 1.0;
-		dda->side->x = ((dda->cell->x + 1.0 - pos->x) * dda->delta->x);
+		dda->step_dir->x = 1;
+		dda->side_dist->x = (dda->cell->x + 1.0 - pos->x) * dda->delta_dist->x;
 	}
 	if (ray_dir->y < 0)
 	{
-		dda->step->y = -1.0;
-		dda->side->y = (pos->y - dda->cell->y) * dda->delta->y;
+		dda->step_dir->y = -1;
+		dda->side_dist->y = (pos->y - dda->cell->y) * dda->delta_dist->y;
 	}
 	else
 	{
-		dda->step->y = 1.0;
-		dda->side->y = (dda->cell->y + 1.0 - pos->y) * dda->delta->y;
+		dda->step_dir->y = 1;
+		dda->side_dist->y = (dda->cell->y + 1.0 - pos->y) * dda->delta_dist->y;
 	}
 }
 
 static void	init_dda(t_ctx *ctx)
 {
-	const t_dda		*dda = &(ctx->player.dda);
-	const t_vec2	*pos = ctx->player.pos;
+	const t_dda	*dda = &(ctx->player.dda);
 
-	dda->cell->x = pos->x;
-	dda->cell->y = pos->y;
-	dda->side->x = 0.0;
-	dda->side->y = 0.0;
-	dda->delta->x = BIG_DOUBLE;
-	dda->delta->y = BIG_DOUBLE;
-	dda_check_dir(ctx->player.ray_dir, dda, pos);
+	dda->cell->x = ctx->player.pos->x;
+	dda->cell->y = ctx->player.pos->y;
+	dda->delta_dist->x = BIG_DOUBLE;
+	dda->delta_dist->y = BIG_DOUBLE;
+	if (ctx->player.ray_dir->x != 0)
+		dda->delta_dist->x = fabs(1.0 / ctx->player.ray_dir->x);
+	if (ctx->player.ray_dir->y != 0)
+		dda->delta_dist->y = fabs(1.0 / ctx->player.ray_dir->y);
 }
 
 static bool	has_hit_wall(t_ctx *ctx, const t_dda *dda)
 {
 	// TODO: care about _END_TILE
 	return (dda->cell->y < ctx->map.height
-		&& dda->cell->x < get_tiles_len(ctx->map.tiles[(int)dda->cell->y])
-		&& ctx->map.tiles[(int)dda->cell->y][(int)dda->cell->x] == WALL);
+		&& dda->cell->x < get_tiles_len(ctx->map.tiles[dda->cell->y])
+		&& ctx->map.tiles[dda->cell->y][dda->cell->x] == WALL);
 }
 
 double	dda(t_ctx *ctx)
@@ -67,24 +63,24 @@ double	dda(t_ctx *ctx)
 	const t_dda	*dda = &(ctx->player.dda);
 	bool		is_vertical_side;
 
-	is_vertical_side = false;
 	init_dda(ctx);
+	dda_check_dir(ctx->player.ray_dir, &ctx->player.dda, ctx->player.pos);
 	while (!has_hit_wall(ctx, dda))
 	{
-		if (dda->side->x < dda->side->y)
+		if (dda->side_dist->x < dda->side_dist->y)
 		{
-			dda->side->x += dda->delta->x;
-			dda->cell->x += dda->step->x;
+			dda->side_dist->x += dda->delta_dist->x;
+			dda->cell->x += dda->step_dir->x;
 			is_vertical_side = false;
 		}
 		else
 		{
-			dda->side->y += dda->delta->y;
-			dda->cell->y += dda->step->y;
+			dda->side_dist->y += dda->delta_dist->y;
+			dda->cell->y += dda->step_dir->y;
 			is_vertical_side = true;
 		}
 	}
 	if (!is_vertical_side)
-		return (dda->side->x - dda->delta->x);
-	return (dda->side->y - dda->delta->y);
+		return (dda->side_dist->x - dda->delta_dist->x);
+	return (dda->side_dist->y - dda->delta_dist->y);
 }

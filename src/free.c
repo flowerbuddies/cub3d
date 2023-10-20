@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 17:27:38 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/20 16:26:24 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/20 17:22:01 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,12 @@ static void	free_player(const t_player *player)
 		free(player->ray_dir);
 	if (player->plane)
 		free(player->plane);
-	if (player->dda.side)
-		free(player->dda.side);
-	if (player->dda.delta)
-		free(player->dda.delta);
-	if (player->dda.step)
-		free(player->dda.step);
+	if (player->dda.side_dist)
+		free(player->dda.side_dist);
+	if (player->dda.delta_dist)
+		free(player->dda.delta_dist);
+	if (player->dda.step_dir)
+		free(player->dda.step_dir);
 	if (player->dda.cell)
 		free(player->dda.cell);
 }
