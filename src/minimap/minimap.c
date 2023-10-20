@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 18:21:53 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/20 17:35:19 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/20 18:42:50 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	init_minimap(t_ctx *ctx)
 		error(ctx->mlx, NULL);
 	if (mlx_image_to_window(ctx->mlx, ctx->mini.img, 0, 0) == -1)
 		error(ctx->mlx, NULL);
+	// TODO: add: ++ctx->mini.img->instances[0].z;
 }
 
 void	draw_minimap(t_ctx *ctx)

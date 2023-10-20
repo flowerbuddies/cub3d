@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/19 17:43:42 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/20 18:41:24 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,9 @@ t_vec2_int	*vec2_int(int x, int y)
 	out->x = x;
 	out->y = y;
 	return (out);
+}
+
+void	clear_img(mlx_image_t *img)
+{
+	ft_memset(img->pixels, 0, img->width * img->height * sizeof(int32_t));
 }
