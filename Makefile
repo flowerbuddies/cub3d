@@ -18,6 +18,7 @@ LIBS += -L$(LIBFT) -lft #libft
 SRCS := $(addprefix $(SRCS_DIR)/,\
 	main.c\
 	utils.c\
+	keys.c\
 	free.c\
 	parser/parser.c\
 	parser/params.c\

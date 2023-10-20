@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:40:14 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/20 17:55:51 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/20 17:57:57 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ static void	draw_vert_strips(t_ctx *ctx, int x, double ray_len)
 	if (draw_end >= HEIGHT)
 		draw_end = HEIGHT - 1;
 	while (draw_start < draw_end)
-		mlx_put_pixel(ctx->player.camera, x, draw_start++, MINIMAP_WALL_COLOR);
+		mlx_put_pixel(ctx->player.camera, x, draw_start++, MINIMAP_WALL_COLOR
+			* 2);
 }
 
 void	raycast(t_ctx *ctx)

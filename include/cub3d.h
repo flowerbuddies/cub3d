@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/20 17:51:14 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/20 18:07:38 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,9 @@ int					open_file(char *filename);
 char				*gnl_no_nl(int fd);
 t_vec2				*vec2(double x, double y);
 t_vec2_int			*vec2_int(int x, int y);
+
+// keys.c
+void				keys_hook(t_ctx *ctx);
 
 // error.c
 void				error(mlx_t *mlx, char *message);
