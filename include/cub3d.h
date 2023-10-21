@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/20 21:19:49 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/21 20:29:34 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,18 +79,6 @@ typedef struct s_map
 	int				width;
 }					t_map;
 
-typedef struct s_bres
-{
-	int				dx;
-	int				sx;
-	int				dy;
-	int				sy;
-	int				err;
-	int				e2;
-	int				x;
-	int				y;
-}					t_bres;
-
 typedef struct s_dda
 {
 	t_vec2			*side_dist;
@@ -148,7 +136,6 @@ void				raycast(t_ctx *ctx);
 void				init_raycast(t_ctx *ctx);
 double				dda(t_ctx *ctx);
 t_vec2				*get_hit_pos(t_vec2 *pos, t_vec2 *ray_dir, double ray_len);
-void				draw_ray(t_ctx *ctx, double ray_len);
 
 // parser/*.c
 void				parse(char *filename, t_ctx *ctx);
@@ -160,6 +147,5 @@ t_tile				get_tile(t_map *map, int x, int y);
 // minimap/*.c
 void				init_minimap(t_ctx *ctx);
 void				draw_minimap(t_ctx *ctx);
-void				draw_player(t_ctx *ctx);
 
 #endif

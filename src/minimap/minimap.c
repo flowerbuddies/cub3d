@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 18:21:53 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/20 20:43:58 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/21 20:30:52 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,23 @@ static int	min(int a, int b)
 	if (a < b)
 		return (a);
 	return (b);
+}
+
+static void	draw_player(t_ctx *ctx)
+{
+	const int	size = ctx->mini.scale >> 2;
+	int			x;
+	int			y;
+
+	y = -size;
+	while (++y < size)
+	{
+		x = -size;
+		while (++x < size)
+			mlx_put_pixel(ctx->mini.img, ctx->player.pos->x * ctx->mini.scale
+				+ x, ctx->player.pos->y * ctx->mini.scale + y,
+				MINIMAP_VOID_COLOR * 2);
+	}
 }
 
 void	init_minimap(t_ctx *ctx)

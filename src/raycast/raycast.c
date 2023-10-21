@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:40:14 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/21 20:16:57 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/21 20:32:29 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ void	raycast(t_ctx *ctx)
 			* camera_x;
 		ray_len = dda(ctx);
 		draw_hit(ctx, ray_len);
-		// draw_ray(ctx, ray_len);
 		draw_vert_strips(ctx, ray, ray_len);
 	}
 }
