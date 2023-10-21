@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/13 22:03:42 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/21 19:35:43 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,13 @@ void	parse(char *filename, t_ctx *ctx)
 	check_map_validity(&ctx->map);
 	if (close(fd) == -1)
 		error(NULL, NULL);
+}
+
+t_tile	get_tile(t_map *map, int x, int y)
+{
+	if (y < 0 || y >= map->height)
+		return (VOID);
+	if (x < 0 || x >= get_tiles_len(map->tiles[y]))
+		return (VOID);
+	return (map->tiles[y][x]);
 }

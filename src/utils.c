@@ -6,11 +6,21 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/13 22:03:36 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/20 18:41:24 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+int	get_tiles_len(t_tile *tiles)
+{
+	int	i;
+
+	i = 0;
+	while (*tiles++)
+		i++;
+	return (i);
+}
 
 int	len_2d(const char **obj)
 {
@@ -67,4 +77,21 @@ t_vec2	*vec2(double x, double y)
 	out->x = x;
 	out->y = y;
 	return (out);
+}
+
+t_vec2_int	*vec2_int(int x, int y)
+{
+	t_vec2_int	*out;
+
+	out = malloc(sizeof(t_vec2_int));
+	if (!out)
+		error(NULL, NULL);
+	out->x = x;
+	out->y = y;
+	return (out);
+}
+
+void	clear_img(mlx_image_t *img)
+{
+	ft_memset(img->pixels, 0, img->width * img->height * sizeof(int32_t));
 }

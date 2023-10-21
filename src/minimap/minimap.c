@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minimap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 18:21:53 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/17 18:00:17 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/21 20:30:52 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,34 @@ static int	min(int a, int b)
 	return (b);
 }
 
+static void	draw_player(t_ctx *ctx)
+{
+	const int	size = ctx->mini.scale >> 2;
+	int			x;
+	int			y;
+
+	y = -size;
+	while (++y < size)
+	{
+		x = -size;
+		while (++x < size)
+			mlx_put_pixel(ctx->mini.img, ctx->player.pos->x * ctx->mini.scale
+				+ x, ctx->player.pos->y * ctx->mini.scale + y,
+				MINIMAP_VOID_COLOR * 2);
+	}
+}
+
 void	init_minimap(t_ctx *ctx)
 {
-	const int	width = WIDTH * .25;
-	const int	height = HEIGHT * .25;
-
-	ctx->mini.scale = min(width / ctx->map.width, height / ctx->map.height);
-	ctx->mini.img = mlx_new_image(ctx->mlx, width, height);
+	ctx->mini.scale = min(WIDTH * MINIMAP_SIZE / ctx->map.width, HEIGHT
+			* MINIMAP_SIZE / ctx->map.height);
+	ctx->mini.img = mlx_new_image(ctx->mlx, ctx->mini.scale * ctx->map.width,
+			ctx->mini.scale * ctx->map.height);
 	if (!ctx->mini.img)
 		error(ctx->mlx, NULL);
-	mlx_image_to_window(ctx->mlx, ctx->mini.img, 0, 0);
+	if (mlx_image_to_window(ctx->mlx, ctx->mini.img, 0, 0) == -1)
+		error(ctx->mlx, NULL);
+	++ctx->mini.img->instances[0].z;
 }
 
 void	draw_minimap(t_ctx *ctx)
