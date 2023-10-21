@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/20 20:44:42 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/20 21:19:49 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,6 +155,7 @@ void				parse(char *filename, t_ctx *ctx);
 void				parse_params(int fd, t_assets *assets);
 void				parse_map(int fd, t_ctx *ctx);
 void				check_map_validity(t_map *map);
+t_tile				get_tile(t_map *map, int x, int y);
 
 // minimap/*.c
 void				init_minimap(t_ctx *ctx);

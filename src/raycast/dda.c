@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 17:38:54 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/20 17:22:41 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/21 20:17:31 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,6 @@ static void	init_dda(t_ctx *ctx)
 		dda->delta_dist->y = fabs(1.0 / ctx->player.ray_dir->y);
 }
 
-static bool	has_hit_wall(t_ctx *ctx, const t_dda *dda)
-{
-	// TODO: care about _END_TILE
-	return (dda->cell->y < ctx->map.height
-		&& dda->cell->x < get_tiles_len(ctx->map.tiles[dda->cell->y])
-		&& ctx->map.tiles[dda->cell->y][dda->cell->x] == WALL);
-}
-
 double	dda(t_ctx *ctx)
 {
 	const t_dda	*dda = &(ctx->player.dda);
@@ -65,7 +57,7 @@ double	dda(t_ctx *ctx)
 
 	init_dda(ctx);
 	dda_check_dir(ctx->player.ray_dir, &ctx->player.dda, ctx->player.pos);
-	while (!has_hit_wall(ctx, dda))
+	while (get_tile(&ctx->map, dda->cell->x, dda->cell->y) == FLOOR)
 	{
 		if (dda->side_dist->x < dda->side_dist->y)
 		{

@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:40:14 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/20 20:36:31 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/21 20:16:57 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	init_raycast(t_ctx *ctx)
 {
-	ctx->player.plane = vec2(0, FOV);
 	ctx->player.ray_dir = vec2(0, 0);
 	ctx->player.dda.cell = vec2_int(0, 0);
 	ctx->player.dda.side_dist = vec2(0, 0);
@@ -36,7 +35,7 @@ static void	draw_hit(t_ctx *ctx, double ray_len)
 {
 	const t_vec2	*hit_pos = get_hit_pos(ctx->player.pos, ctx->player.ray_dir,
 				ray_len);
-	const int		hit_size = ctx->mini.scale >> 3;
+	const int		hit_size = ctx->mini.scale / 4;
 	int				y;
 	int				x;
 
@@ -46,7 +45,7 @@ static void	draw_hit(t_ctx *ctx, double ray_len)
 		x = -hit_size;
 		while (++x < hit_size)
 			mlx_put_pixel(ctx->mini.img, hit_pos->x * ctx->mini.scale + x,
-				hit_pos->y * ctx->mini.scale + y, 0x00FF00FF);
+				hit_pos->y * ctx->mini.scale + y, MINIMAP_WALL_COLOR * 2);
 	}
 	free((void *)hit_pos);
 }

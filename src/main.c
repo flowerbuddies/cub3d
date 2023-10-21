@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:22:30 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/20 20:36:04 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/21 20:11:15 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	main(int ac, char **av)
 	if (ac != 2)
 		error(NULL, "Invalid number of arguments");
 	ctx = get_ctx();
-	ft_bzero(ctx, sizeof(*ctx));
+	ft_bzero(ctx, sizeof(t_ctx));
 	parse(av[1], ctx);
 	init_mlx(ctx);
 	init_minimap(ctx);

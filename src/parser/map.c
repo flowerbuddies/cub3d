@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 20:42:32 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/18 17:14:31 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/21 20:09:58 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,25 @@ static void	set_player(t_player *player, char dir, int x, int y)
 		(free_ctx(), error(NULL, "Too many spawn positions"));
 	player->pos = vec2(x + .5, y + .5);
 	if (dir == 'N')
-		player->dir = vec2(0, 1);
-	else if (dir == 'S')
+	{
 		player->dir = vec2(0, -1);
+		player->plane = vec2(FOV, 0);
+	}
+	else if (dir == 'S')
+	{
+		player->dir = vec2(0, 1);
+		player->plane = vec2(FOV, 0);
+	}
 	else if (dir == 'E')
+	{
 		player->dir = vec2(1, 0);
+		player->plane = vec2(0, FOV);
+	}
 	else
+	{
 		player->dir = vec2(-1, 0);
+		player->plane = vec2(0, FOV);
+	}
 }
 
 static t_tile	*get_tiles(t_ctx *ctx, char *line)

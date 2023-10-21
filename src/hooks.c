@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 18:06:36 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/20 20:34:30 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/21 20:24:20 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,11 @@ void	keys_hook(t_ctx *ctx)
 
 void	cursor_hook(double x, double y, t_ctx *ctx)
 {
-	static double	old_x = WIDTH / 2;
+	static double	old_x = INT_MAX;
 
 	(void)y;
+	if (old_x == INT_MAX)
+		old_x = x;
 	rot_cam(ctx, (x - old_x) / 200);
 	old_x = x;
 }
