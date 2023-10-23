@@ -3,14 +3,48 @@
 /*                                                        :::      ::::::::   */
 /*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 18:06:36 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/21 20:24:20 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/23 17:06:04 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+static bool	is_collision(t_ctx *ctx, t_vec2 *new_pos)
+{
+	return (get_tile(&ctx->map, new_pos->x, new_pos->y) != FLOOR);
+}
+
+static void	move_player(t_ctx *ctx, char dir)
+{
+	const double	move_speed = ctx->mlx->delta_time
+		* 3 * ((dir == 'w' || dir == 'd') * 2 - 1);
+	t_vec2			new_pos;
+
+	if (dir == 'w' || dir == 's')
+	{
+		new_pos.x = ctx->player.pos->x + ctx->player.dir->x * move_speed;
+		new_pos.y = ctx->player.pos->y + ctx->player.dir->y * move_speed;
+		if (!is_collision(ctx, &new_pos))
+		{
+			ctx->player.pos->y += ctx->player.dir->y * move_speed;
+			ctx->player.pos->x += ctx->player.dir->x * move_speed;
+		}
+	}
+	else if (dir == 'a' || dir == 'd')
+	{
+		new_pos.x = ctx->player.pos->x + -ctx->player.dir->y * move_speed;
+		new_pos.y = ctx->player.pos->y + ctx->player.dir->x * move_speed;
+		if (!is_collision(ctx, &new_pos))
+		{
+			ctx->player.pos->y += ctx->player.dir->x * move_speed;
+			ctx->player.pos->x += -ctx->player.dir->y * move_speed;
+		}
+	}
+	clear_img(ctx->player.camera);
+}
 
 static void	rot_cam(t_ctx *ctx, double speed)
 {
@@ -36,6 +70,14 @@ void	keys_hook(t_ctx *ctx)
 		rot_cam(ctx, -rot_speed);
 	if (mlx_is_key_down(ctx->mlx, MLX_KEY_RIGHT))
 		rot_cam(ctx, rot_speed);
+	if (mlx_is_key_down(ctx->mlx, MLX_KEY_W))
+		move_player(ctx, 'w');
+	if (mlx_is_key_down(ctx->mlx, MLX_KEY_S))
+		move_player(ctx, 's');
+	if (mlx_is_key_down(ctx->mlx, MLX_KEY_A))
+		move_player(ctx, 'a');
+	if (mlx_is_key_down(ctx->mlx, MLX_KEY_D))
+		move_player(ctx, 'd');
 	if (mlx_is_key_down(ctx->mlx, MLX_KEY_ESCAPE))
 		(free_ctx(), exit(0));
 }

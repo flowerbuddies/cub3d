@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raycast.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:40:14 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/21 20:32:29 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/23 17:10:24 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ static void	draw_vert_strips(t_ctx *ctx, int x, double ray_len)
 	const int	line_height = (HEIGHT / ray_len);
 	int			draw_start;
 	int			draw_end;
+	int			y_pixel;
 
 	draw_start = -line_height / 2 + HEIGHT / 2;
 	if (draw_start < 0)
@@ -62,9 +63,15 @@ static void	draw_vert_strips(t_ctx *ctx, int x, double ray_len)
 	draw_end = line_height / 2 + HEIGHT / 2;
 	if (draw_end >= HEIGHT)
 		draw_end = HEIGHT - 1;
+	y_pixel = -1;
+	// while (++y_pixel < draw_start) // TODO: benchmark vs clearing image.
+	// 	mlx_put_pixel(ctx->player.camera, x, y_pixel, *ctx->assets.floor);
 	while (draw_start < draw_end)
 		mlx_put_pixel(ctx->player.camera, x, draw_start++, MINIMAP_WALL_COLOR
 			* 2);
+	y_pixel = draw_end;
+	// while (++y_pixel < HEIGHT)
+	// 	mlx_put_pixel(ctx->player.camera, x, y_pixel, *ctx->assets.ceiling);
 }
 
 void	raycast(t_ctx *ctx)
