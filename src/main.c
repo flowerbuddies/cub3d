@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:22:30 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/21 20:11:15 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/23 18:37:22 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,24 @@ static void	init_mlx(t_ctx *ctx)
 		error(NULL, NULL);
 }
 
+static void	draw_fps_counter(t_ctx *ctx)
+{
+	static char			*fps;
+	static mlx_image_t	*fps_counter;
+
+	fps = ft_itoa(1.0 / ctx->mlx->delta_time);
+	if (fps_counter)
+	{
+		mlx_delete_image(ctx->mlx, fps_counter);
+		fps_counter = mlx_put_string(ctx->mlx, fps,
+				WIDTH - fps_counter->width, 0);
+	}
+	else
+		fps_counter = mlx_put_string(ctx->mlx, fps, WIDTH - 50, 0);
+	fps_counter->instances[0].z = 3;
+	free(fps);
+}
+
 int	main(int ac, char **av)
 {
 	t_ctx	*ctx;
@@ -42,10 +60,11 @@ int	main(int ac, char **av)
 	init_mlx(ctx);
 	init_minimap(ctx);
 	init_raycast(ctx);
+	draw_minimap(ctx);
+	draw_raycast(ctx);
 	mlx_cursor_hook(ctx->mlx, (mlx_cursorfunc)cursor_hook, ctx);
 	mlx_loop_hook(ctx->mlx, (t_hook)keys_hook, ctx);
-	mlx_loop_hook(ctx->mlx, (t_hook)draw_minimap, ctx);
-	mlx_loop_hook(ctx->mlx, (t_hook)raycast, ctx);
+	mlx_loop_hook(ctx->mlx, (t_hook)draw_fps_counter, ctx);
 	mlx_loop(ctx->mlx);
 	free_ctx();
 }

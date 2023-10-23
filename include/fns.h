@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fns.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/21 20:44:08 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/23 18:37:21 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void		free_2d(const char **obj);
 void		free_ctx(void);
 
 // raycast/*.c
-void		raycast(t_ctx *ctx);
+void		draw_raycast(t_ctx *ctx);
 void		init_raycast(t_ctx *ctx);
 double		dda(t_ctx *ctx);
 t_vec2		*get_hit_pos(t_vec2 *pos, t_vec2 *ray_dir, double ray_len);

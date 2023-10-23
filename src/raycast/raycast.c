@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:40:14 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/23 17:10:24 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/23 18:37:21 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	draw_vert_strips(t_ctx *ctx, int x, double ray_len)
 	// 	mlx_put_pixel(ctx->player.camera, x, y_pixel, *ctx->assets.ceiling);
 }
 
-void	raycast(t_ctx *ctx)
+void	draw_raycast(t_ctx *ctx)
 {
 	double	ray;
 	double	camera_x;

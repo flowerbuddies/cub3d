@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 18:06:36 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/23 17:06:04 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/23 18:37:21 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	keys_hook(t_ctx *ctx)
 		rot_cam(ctx, -rot_speed);
 	if (mlx_is_key_down(ctx->mlx, MLX_KEY_RIGHT))
 		rot_cam(ctx, rot_speed);
-	if (mlx_is_key_down(ctx->mlx, MLX_KEY_W))
+	if (mlx_is_key_down(ctx->mlx, MLX_KEY_W)) //TODO: benchmark vs mlx_key_hook
 		move_player(ctx, 'w');
 	if (mlx_is_key_down(ctx->mlx, MLX_KEY_S))
 		move_player(ctx, 's');
@@ -80,6 +80,8 @@ void	keys_hook(t_ctx *ctx)
 		move_player(ctx, 'd');
 	if (mlx_is_key_down(ctx->mlx, MLX_KEY_ESCAPE))
 		(free_ctx(), exit(0));
+	draw_minimap(ctx);
+	draw_raycast(ctx);
 }
 
 void	cursor_hook(double x, double y, t_ctx *ctx)
