@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:22:30 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/23 19:02:05 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/24 21:33:03 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,8 @@ static void	draw_fps_counter(t_ctx *ctx)
 
 	fps = ft_itoa(1.0 / ctx->mlx->delta_time);
 	if (fps_counter)
-	{
 		mlx_delete_image(ctx->mlx, fps_counter);
-		fps_counter = mlx_put_string(ctx->mlx, fps,
-				WIDTH - fps_counter->width, 0);
-	}
-	else
-		fps_counter = mlx_put_string(ctx->mlx, fps, WIDTH - 50, 0);
+	fps_counter = mlx_put_string(ctx->mlx, fps, WIDTH - 35, 0);
 	fps_counter->instances[0].z = 1;
 	free(fps);
 }
