@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:40:14 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/23 18:37:21 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/23 19:01:45 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	init_raycast(t_ctx *ctx)
 		error(ctx->mlx, NULL);
 	if (mlx_image_to_window(ctx->mlx, ctx->player.camera, 0, 0) == -1)
 		error(ctx->mlx, NULL);
+	ctx->player.camera->instances[0].z = 0;
 }
 
 t_vec2	*get_hit_pos(t_vec2 *pos, t_vec2 *ray_dir, double ray_len)

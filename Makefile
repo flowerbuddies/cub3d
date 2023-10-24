@@ -21,6 +21,7 @@ SRCS := $(addprefix $(SRCS_DIR)/,\
 	utils.c\
 	hooks.c\
 	free.c\
+	background.c\
 	parser/parser.c\
 	parser/params.c\
 	parser/map.c\

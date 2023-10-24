@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/23 18:37:21 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/23 18:54:55 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ void		clear_img(mlx_image_t *img);
 // hooks.c
 void		keys_hook(t_ctx *ctx);
 void		cursor_hook(double xpos, double ypos, t_ctx *ctx);
+
+// background.c
+void		init_background(t_ctx *ctx);
 
 // error.c
 void		error(mlx_t *mlx, char *message);

@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:22:30 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/23 18:37:22 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/23 19:02:05 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	draw_fps_counter(t_ctx *ctx)
 	}
 	else
 		fps_counter = mlx_put_string(ctx->mlx, fps, WIDTH - 50, 0);
-	fps_counter->instances[0].z = 3;
+	fps_counter->instances[0].z = 1;
 	free(fps);
 }
 
@@ -58,6 +58,7 @@ int	main(int ac, char **av)
 	ft_bzero(ctx, sizeof(t_ctx));
 	parse(av[1], ctx);
 	init_mlx(ctx);
+	init_background(ctx);
 	init_minimap(ctx);
 	init_raycast(ctx);
 	draw_minimap(ctx);

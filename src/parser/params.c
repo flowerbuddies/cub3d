@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   params.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/16 19:18:29 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/24 14:23:11 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static mlx_texture_t	*get_texture(const char **parts, char *line)
 	}
 	return (out);
 }
-
 static int	*channels_to_color(char **channels)
 {
 	const int	r = ft_atoi(channels[0]);
@@ -44,7 +43,7 @@ static int	*channels_to_color(char **channels)
 	out = malloc(sizeof(int));
 	if (!out)
 		error(NULL, NULL);
-	*out = r << 24 | g << 16 | b << 8;
+	*out = r << 24 | g << 16 | b << 8 | 0xFF;
 	return (out);
 }
 
