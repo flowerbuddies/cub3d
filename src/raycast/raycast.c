@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:40:14 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/30 18:30:37 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/30 19:40:08 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,14 @@ static void	draw_hit(t_ctx *ctx)
 	}
 }
 
-static int	get_texture_color(t_ctx *ctx, double width_ratio,
-		double height_ratio)
+static int	get_texture_color(t_ctx *ctx, double x_mapping, double y_mapping)
 {
-	const int	row_length = ctx->player.wall_txtr->bytes_per_pixel
+	const int	txtr_width = ctx->player.wall_txtr->bytes_per_pixel
 			* ctx->player.wall_txtr->width;
-	const int	x_offset = row_length * width_ratio;
-	const int	y_offset = ctx->player.wall_txtr->height * height_ratio;
-	const int	offset = y_offset * row_length + x_offset;
+	const int	x_offset = ctx->player.wall_txtr->width * x_mapping;
+	const int	y_offset = ctx->player.wall_txtr->height * y_mapping;
+	const int	offset = x_offset * ctx->player.wall_txtr->bytes_per_pixel
+			+ y_offset * txtr_width;
 	const int	r = ctx->player.wall_txtr->pixels[offset];
 	const int	g = ctx->player.wall_txtr->pixels[offset + 1];
 	const int	b = ctx->player.wall_txtr->pixels[offset + 2];
@@ -72,13 +72,13 @@ static int	get_texture_color(t_ctx *ctx, double width_ratio,
 }
 
 static void	draw_vert_strips(t_ctx *ctx, int x, double ray_len,
-		double width_ratio)
+		double x_mapping)
 {
 	const int	line_height = (HEIGHT / ray_len);
 	int			draw_start;
 	int			draw_end;
 	int			color;
-	double		height_ratio;
+	double		y_mapping;
 
 	// int			y_pixel;
 	draw_start = -line_height / 2 + HEIGHT / 2;
@@ -92,9 +92,9 @@ static void	draw_vert_strips(t_ctx *ctx, int x, double ray_len,
 	// 	mlx_put_pixel(ctx->player.camera, x, y_pixel, *ctx->assets.floor);
 	while (draw_start < draw_end)
 	{
-		height_ratio = (double)(draw_start - (-line_height / 2 + HEIGHT / 2))
+		y_mapping = (double)(draw_start - (-line_height / 2 + HEIGHT / 2))
 			/ line_height;
-		color = get_texture_color(ctx, width_ratio, height_ratio);
+		color = get_texture_color(ctx, x_mapping, y_mapping);
 		mlx_put_pixel(ctx->player.camera, x, draw_start++, color);
 	}
 	// y_pixel = draw_end;
@@ -104,7 +104,20 @@ static void	draw_vert_strips(t_ctx *ctx, int x, double ray_len,
 
 static void	set_wall_texture(t_ctx *ctx)
 {
-	ctx->player.wall_txtr = ctx->assets.north;
+	if (*ctx->player.dda.is_vertical_side)
+	{
+		if (ctx->player.hit_pos->y - (double)ctx->player.dda.cell->y > 0.5)
+			ctx->player.wall_txtr = ctx->assets.north;
+		else
+			ctx->player.wall_txtr = ctx->assets.south;
+	}
+	else
+	{
+		if (ctx->player.hit_pos->x - (double)ctx->player.dda.cell->x > 0.5)
+			ctx->player.wall_txtr = ctx->assets.east;
+		else
+			ctx->player.wall_txtr = ctx->assets.west;
+	}
 }
 
 static double	get_width_ratio(t_ctx *ctx)
