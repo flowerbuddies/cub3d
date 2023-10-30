@@ -9,7 +9,7 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "/Users/marmulle/Projects/42/cub3d/cub3D",
-			"args": ["maps/good/sides.cub"],
+			"args": ["maps/good/grass.cub"],
 			"stopAtEntry": false,
 			"cwd": "/Users/marmulle/Projects/42/cub3d",
 			"environment": [],

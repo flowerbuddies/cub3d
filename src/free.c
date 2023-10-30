@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 17:27:38 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/30 11:56:10 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/20 17:22:01 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	free_2d(const char **obj)
 	free(obj);
 }
 
-static void	free_assets(const t_assets *assets)
+static void	free_params(const t_assets *assets)
 {
 	if (assets->north)
 		mlx_delete_texture(assets->north);
@@ -74,7 +74,7 @@ void	free_ctx(void)
 
 	if (ctx->mlx)
 		mlx_terminate(ctx->mlx);
-	free_assets(&ctx->assets);
+	free_params(&ctx->assets);
 	free_map(&ctx->map);
 	free_player(&ctx->player);
 }
