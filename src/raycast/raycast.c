@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:40:14 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/30 14:23:30 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/30 18:30:37 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 void	init_raycast(t_ctx *ctx)
 {
 	ctx->player.ray_dir = vec2(0, 0);
+	ctx->player.hit_pos = vec2(0, 0);
+	ctx->player.dda.is_vertical_side = malloc(sizeof(bool));
+	if (!ctx->player.dda.is_vertical_side)
+		error(ctx->mlx, NULL);
 	ctx->player.dda.cell = vec2_int(0, 0);
 	ctx->player.dda.side_dist = vec2(0, 0);
 	ctx->player.dda.delta_dist = vec2(0, 0);
@@ -27,50 +31,54 @@ void	init_raycast(t_ctx *ctx)
 	ctx->player.camera->instances[0].z = 0;
 }
 
-t_vec2	*get_hit_pos(t_vec2 *pos, t_vec2 *ray_dir, double ray_len)
+static void	set_hit_pos(t_ctx *ctx, t_vec2 *pos, t_vec2 *ray_dir,
+		double ray_len)
 {
-	return (vec2(pos->x + ray_dir->x * ray_len, pos->y + ray_dir->y * ray_len));
+	ctx->player.hit_pos->x = pos->x + ray_dir->x * ray_len;
+	ctx->player.hit_pos->y = pos->y + ray_dir->y * ray_len;
 }
 
-static void	draw_hit(t_ctx *ctx, double ray_len)
+static void	draw_hit(t_ctx *ctx)
 {
-	const t_vec2	*hit_pos = get_hit_pos(ctx->player.pos, ctx->player.ray_dir,
-				ray_len);
-	const int		hit_size = ctx->mini.scale / 4;
-	int				y;
-	int				x;
+	const int	hit_size = ctx->mini.scale / 4;
+	int			y;
+	int			x;
 
 	y = -hit_size;
 	while (++y < hit_size)
 	{
 		x = -hit_size;
 		while (++x < hit_size)
-			mlx_put_pixel(ctx->mini.img, hit_pos->x * ctx->mini.scale + x,
-				hit_pos->y * ctx->mini.scale + y, MINIMAP_WALL_COLOR * 2);
+			mlx_put_pixel(ctx->mini.img, ctx->player.hit_pos->x
+				* ctx->mini.scale + x, ctx->player.hit_pos->y * ctx->mini.scale
+				+ y, MINIMAP_WALL_COLOR * 2);
 	}
-	free((void *)hit_pos);
 }
 
-static int	get_texture_color(t_ctx *ctx, double height_ratio)
+static int	get_texture_color(t_ctx *ctx, double width_ratio,
+		double height_ratio)
 {
-	const int	x_offset = ctx->assets.north->bytes_per_pixel
-			* ctx->assets.north->width;
-	const int	y_offset = ctx->assets.north->height * height_ratio;
-	const int	offset = y_offset * x_offset;
-	const int	r = ctx->assets.north->pixels[offset];
-	const int	g = ctx->assets.north->pixels[offset + 1];
-	const int	b = ctx->assets.north->pixels[offset + 2];
+	const int	row_length = ctx->player.wall_txtr->bytes_per_pixel
+			* ctx->player.wall_txtr->width;
+	const int	x_offset = row_length * width_ratio;
+	const int	y_offset = ctx->player.wall_txtr->height * height_ratio;
+	const int	offset = y_offset * row_length + x_offset;
+	const int	r = ctx->player.wall_txtr->pixels[offset];
+	const int	g = ctx->player.wall_txtr->pixels[offset + 1];
+	const int	b = ctx->player.wall_txtr->pixels[offset + 2];
 	const int	color = r << 24 | g << 16 | b << 8 | 0xFF;
 
 	return (color);
 }
 
-static void	draw_vert_strips(t_ctx *ctx, int x, double ray_len)
+static void	draw_vert_strips(t_ctx *ctx, int x, double ray_len,
+		double width_ratio)
 {
 	const int	line_height = (HEIGHT / ray_len);
 	int			draw_start;
 	int			draw_end;
 	int			color;
+	double		height_ratio;
 
 	// int			y_pixel;
 	draw_start = -line_height / 2 + HEIGHT / 2;
@@ -84,13 +92,27 @@ static void	draw_vert_strips(t_ctx *ctx, int x, double ray_len)
 	// 	mlx_put_pixel(ctx->player.camera, x, y_pixel, *ctx->assets.floor);
 	while (draw_start < draw_end)
 	{
-		color = get_texture_color(ctx, (double)(draw_start - (-line_height / 2
-						+ HEIGHT / 2)) / line_height);
+		height_ratio = (double)(draw_start - (-line_height / 2 + HEIGHT / 2))
+			/ line_height;
+		color = get_texture_color(ctx, width_ratio, height_ratio);
 		mlx_put_pixel(ctx->player.camera, x, draw_start++, color);
 	}
 	// y_pixel = draw_end;
 	// while (++y_pixel < HEIGHT)
 	// 	mlx_put_pixel(ctx->player.camera, x, y_pixel, *ctx->assets.ceiling);
+}
+
+static void	set_wall_texture(t_ctx *ctx)
+{
+	ctx->player.wall_txtr = ctx->assets.north;
+}
+
+static double	get_width_ratio(t_ctx *ctx)
+{
+	if (*ctx->player.dda.is_vertical_side)
+		return (ctx->player.hit_pos->x - (double)ctx->player.dda.cell->x);
+	else
+		return (ctx->player.hit_pos->y - (double)ctx->player.dda.cell->y);
 }
 
 void	draw_raycast(t_ctx *ctx)
@@ -108,7 +130,9 @@ void	draw_raycast(t_ctx *ctx)
 		ctx->player.ray_dir->y = ctx->player.dir->y + ctx->player.plane->y
 			* camera_x;
 		ray_len = dda(ctx);
-		draw_hit(ctx, ray_len);
-		draw_vert_strips(ctx, ray, ray_len);
+		set_hit_pos(ctx, ctx->player.pos, ctx->player.ray_dir, ray_len);
+		set_wall_texture(ctx);
+		draw_hit(ctx);
+		draw_vert_strips(ctx, ray, ray_len, get_width_ratio(ctx));
 	}
 }

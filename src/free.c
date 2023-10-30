@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 17:27:38 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/30 11:56:10 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/10/30 18:20:10 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ static void	free_player(const t_player *player)
 		free(player->pos);
 	if (player->ray_dir)
 		free(player->ray_dir);
+	if (player->hit_pos)
+		free(player->hit_pos);
 	if (player->plane)
 		free(player->plane);
 	if (player->dda.side_dist)
@@ -66,6 +68,8 @@ static void	free_player(const t_player *player)
 		free(player->dda.step_dir);
 	if (player->dda.cell)
 		free(player->dda.cell);
+	if (player->dda.is_vertical_side)
+		free(player->dda.is_vertical_side);
 }
 
 void	free_ctx(void)
