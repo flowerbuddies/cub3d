@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:40:14 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/30 19:40:08 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/02 15:02:01 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,13 @@ static void	draw_hit(t_ctx *ctx)
 
 static int	get_texture_color(t_ctx *ctx, double x_mapping, double y_mapping)
 {
-	const int	txtr_width = ctx->player.wall_txtr->bytes_per_pixel
-			* ctx->player.wall_txtr->width;
 	const int	x_offset = ctx->player.wall_txtr->width * x_mapping;
 	const int	y_offset = ctx->player.wall_txtr->height * y_mapping;
 	const int	offset = x_offset * ctx->player.wall_txtr->bytes_per_pixel
-			+ y_offset * txtr_width;
-	const int	r = ctx->player.wall_txtr->pixels[offset];
-	const int	g = ctx->player.wall_txtr->pixels[offset + 1];
-	const int	b = ctx->player.wall_txtr->pixels[offset + 2];
-	const int	color = r << 24 | g << 16 | b << 8 | 0xFF;
+			+ y_offset * ctx->player.wall_txtr->bytes_per_pixel
+			* ctx->player.wall_txtr->width;
+	const int	color = ctx->player.wall_txtr->pixels[offset] << 24 | ctx->player.wall_txtr->pixels[offset
+			+ 1] << 16 | ctx->player.wall_txtr->pixels[offset + 2] << 8 | 0xFF;
 
 	return (color);
 }
