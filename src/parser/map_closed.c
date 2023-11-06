@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map_closed.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 12:42:19 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/19 17:44:17 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/06 14:34:56 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ static bool	is_surrounded_by_walls(t_map *map, int x, int y)
 {
 	if (y == 0 || y == map->height)
 		return (false);
-	if (x > get_tiles_len(map->tiles[y - 1]) || x > get_tiles_len(map->tiles[y
-			+ 1]))
+	if (x > get_tiles_len(map->tiles[y - 1])
+		|| x > get_tiles_len(map->tiles[y + 1]))
 		return (false);
 	if (map->tiles[y - 1][x] == VOID || map->tiles[y + 1][x] == VOID)
 		return (false);

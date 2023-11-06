@@ -6,13 +6,13 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 18:06:36 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/23 18:37:21 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/06 14:45:00 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static bool	is_collision(t_ctx *ctx, t_vec2 *new_pos)
+static bool	is_collision(t_ctx *ctx, t_vec2f *new_pos)
 {
 	return (get_tile(&ctx->map, new_pos->x, new_pos->y) != FLOOR);
 }
@@ -21,7 +21,7 @@ static void	move_player(t_ctx *ctx, char dir)
 {
 	const double	move_speed = ctx->mlx->delta_time
 		* 3 * ((dir == 'w' || dir == 'd') * 2 - 1);
-	t_vec2			new_pos;
+	t_vec2f			new_pos;
 
 	if (dir == 'w' || dir == 's')
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/21 19:35:43 by hunam            ###   ########.fr       */
+/*   Updated: 2023/11/06 14:43:36 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,15 @@ static void	check_filename(char *filename)
 		error(NULL, "Invalid file name");
 	if (ft_strlen(ext) != 4 || ft_strncmp(ext, ".cub\0", 4))
 		error(NULL, "Invalid file name");
+}
+
+static int	open_file(char *filename)
+{
+	const int	fd = open(filename, O_RDONLY);
+
+	if (fd == -1)
+		error(NULL, NULL);
+	return (fd);
 }
 
 void	parse(char *filename, t_ctx *ctx)

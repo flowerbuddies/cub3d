@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/24 14:23:11 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/06 14:30:32 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static mlx_texture_t	*get_texture(const char **parts, char *line)
 		(free_ctx(), free_2d(parts), free(line));
 		error(NULL, "Invalid NO/SO/EA/WE parameter argument count");
 	}
-	// TODO: support both XMP and PNG
 	out = mlx_load_png(parts[1]);
 	if (!out)
 	{
@@ -30,6 +29,7 @@ static mlx_texture_t	*get_texture(const char **parts, char *line)
 	}
 	return (out);
 }
+
 static int	*channels_to_color(char **channels)
 {
 	const int	r = ft_atoi(channels[0]);

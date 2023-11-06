@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:22:30 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/24 21:33:03 by hunam            ###   ########.fr       */
+/*   Updated: 2023/11/06 14:35:23 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ t_ctx	*get_ctx(void)
 
 static void	init_mlx(t_ctx *ctx)
 {
-	// TODO: try to use mlx_get_monitor_size
 	mlx_set_setting(MLX_STRETCH_IMAGE, true);
 	ctx->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", true);
 	if (!ctx->mlx)

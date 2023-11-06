@@ -29,6 +29,7 @@ SRCS := $(addprefix $(SRCS_DIR)/,\
 	parser/error.c\
 	minimap/minimap.c\
 	raycast/raycast.c\
+	raycast/draw.c\
 	raycast/dda.c\
 )
 OBJS := $(patsubst $(SRCS_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))

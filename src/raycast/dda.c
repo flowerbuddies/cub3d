@@ -3,16 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 17:38:54 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/30 18:22:09 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/06 14:44:51 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-static void	dda_check_dir(t_vec2 *ray_dir, const t_dda *dda, const t_vec2 *pos)
+t_vec2f	*vec2f(double x, double y)
+{
+	t_vec2f	*out;
+
+	out = malloc(sizeof(t_vec2f));
+	if (!out)
+		error(NULL, NULL);
+	out->x = x;
+	out->y = y;
+	return (out);
+}
+
+t_vec2i	*vec2i(int x, int y)
+{
+	t_vec2i	*out;
+
+	out = malloc(sizeof(t_vec2i));
+	if (!out)
+		error(NULL, NULL);
+	out->x = x;
+	out->y = y;
+	return (out);
+}
+
+static void	check_dir(t_vec2f *ray_dir, const t_dda *dda, const t_vec2f *pos)
 {
 	if (ray_dir->x < 0)
 	{
@@ -55,7 +79,7 @@ double	dda(t_ctx *ctx)
 	const t_dda	*dda = &(ctx->player.dda);
 
 	init_dda(ctx);
-	dda_check_dir(ctx->player.ray_dir, &ctx->player.dda, ctx->player.pos);
+	check_dir(ctx->player.ray_dir, &ctx->player.dda, ctx->player.pos);
 	while (get_tile(&ctx->map, dda->cell->x, dda->cell->y) == FLOOR)
 	{
 		if (dda->side_dist->x < dda->side_dist->y)

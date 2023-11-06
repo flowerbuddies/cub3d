@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   map.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 20:42:32 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/21 20:09:58 by hunam            ###   ########.fr       */
+/*   Updated: 2023/11/06 14:39:47 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,26 +57,26 @@ static void	set_player(t_player *player, char dir, int x, int y)
 {
 	if (player->pos)
 		(free_ctx(), error(NULL, "Too many spawn positions"));
-	player->pos = vec2(x + .5, y + .5);
+	player->pos = vec2f(x + .5, y + .5);
 	if (dir == 'N')
 	{
-		player->dir = vec2(0, -1);
-		player->plane = vec2(FOV, 0);
+		player->dir = vec2f(0, -1);
+		player->plane = vec2f(FOV, 0);
 	}
 	else if (dir == 'S')
 	{
-		player->dir = vec2(0, 1);
-		player->plane = vec2(FOV, 0);
+		player->dir = vec2f(0, 1);
+		player->plane = vec2f(FOV, 0);
 	}
 	else if (dir == 'E')
 	{
-		player->dir = vec2(1, 0);
-		player->plane = vec2(0, FOV);
+		player->dir = vec2f(1, 0);
+		player->plane = vec2f(0, FOV);
 	}
 	else
 	{
-		player->dir = vec2(-1, 0);
-		player->plane = vec2(0, FOV);
+		player->dir = vec2f(-1, 0);
+		player->plane = vec2f(0, FOV);
 	}
 }
 
@@ -101,8 +101,7 @@ static t_tile	*get_tiles(t_ctx *ctx, char *line)
 			|| line[i] == 'W')
 			set_player(&ctx->player, line[i], i, ctx->map.height);
 		else if (line[i] != '0')
-			(free(line), free(tiles), free_ctx(), error(NULL,
-					"Bad character in the map"));
+			(free(line), free(tiles), free_ctx(), error(NULL, "Wrong symbol"));
 	}
 	tiles[i] = _END_TILE;
 	if (len > ctx->map.width)

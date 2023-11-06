@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defs.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/30 18:20:28 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/06 14:45:32 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ typedef struct s_vec2
 {
 	double			x;
 	double			y;
-}					t_vec2;
+}					t_vec2f;
 
-typedef struct s_vec2_int
+typedef struct s_vec2i
 {
 	int				x;
 	int				y;
-}					t_vec2_int;
+}					t_vec2i;
 
 typedef struct s_assets
 {
@@ -62,22 +62,22 @@ typedef struct s_map
 
 typedef struct s_dda
 {
-	t_vec2			*side_dist;
-	t_vec2			*delta_dist;
-	t_vec2_int		*step_dir;
-	t_vec2_int		*cell;
+	t_vec2f			*side_dist;
+	t_vec2f			*delta_dist;
+	t_vec2i			*step_dir;
+	t_vec2i			*cell;
 	bool			*is_vertical_side;
 }					t_dda;
 
 typedef struct s_player
 {
-	t_vec2			*pos;
-	t_vec2			*dir;
+	t_vec2f			*pos;
+	t_vec2f			*dir;
 	// TODO: maybe move these fields
-	t_vec2			*ray_dir;
-	t_vec2			*hit_pos;
+	t_vec2f			*ray_dir;
+	t_vec2f			*hit_pos;
 	mlx_texture_t	*wall_txtr;
-	t_vec2			*plane;
+	t_vec2f			*plane;
 	t_dda			dda;
 	mlx_image_t		*camera;
 }					t_player;
