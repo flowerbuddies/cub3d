@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/21 20:44:09 by hunam            ###   ########.fr       */
+/*   Updated: 2023/11/06 16:54:20 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 
 # define FOV .66
 # define BIG_DOUBLE 1e30
+# define DEADZONE 5
 
 # define MINIMAP_SIZE .33
 # define MINIMAP_VOID_COLOR 0xd8e993FF

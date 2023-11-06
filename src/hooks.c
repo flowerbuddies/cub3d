@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 18:06:36 by hunam             #+#    #+#             */
-/*   Updated: 2023/11/06 16:34:26 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:54:56 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,28 +19,28 @@ static bool	is_collision(t_ctx *ctx, t_vec2f *new_pos)
 
 static void	move_player(t_ctx *ctx, char dir)
 {
-	const double	move_speed = ctx->mlx->delta_time
+	const double	speed = ctx->mlx->delta_time
 		* 3 * ((dir == 'w' || dir == 'd') * 2 - 1);
 	t_vec2f			new_pos;
 
 	if (dir == 'w' || dir == 's')
 	{
-		new_pos.x = ctx->player.pos->x + ctx->player.dir->x * move_speed;
-		new_pos.y = ctx->player.pos->y + ctx->player.dir->y * move_speed;
+		new_pos.x = ctx->player.pos->x + ctx->player.dir->x * speed * DEADZONE;
+		new_pos.y = ctx->player.pos->y + ctx->player.dir->y * speed * DEADZONE;
 		if (!is_collision(ctx, &new_pos))
 		{
-			ctx->player.pos->y += ctx->player.dir->y * move_speed;
-			ctx->player.pos->x += ctx->player.dir->x * move_speed;
+			ctx->player.pos->y += ctx->player.dir->y * speed;
+			ctx->player.pos->x += ctx->player.dir->x * speed;
 		}
 	}
 	else if (dir == 'a' || dir == 'd')
 	{
-		new_pos.x = ctx->player.pos->x + -ctx->player.dir->y * move_speed;
-		new_pos.y = ctx->player.pos->y + ctx->player.dir->x * move_speed;
+		new_pos.x = ctx->player.pos->x + -ctx->player.dir->y * speed * DEADZONE;
+		new_pos.y = ctx->player.pos->y + ctx->player.dir->x * speed * DEADZONE;
 		if (!is_collision(ctx, &new_pos))
 		{
-			ctx->player.pos->y += ctx->player.dir->x * move_speed;
-			ctx->player.pos->x += -ctx->player.dir->y * move_speed;
+			ctx->player.pos->y += ctx->player.dir->x * speed;
+			ctx->player.pos->x += -ctx->player.dir->y * speed;
 		}
 	}
 	clear_img(ctx->player.camera);
