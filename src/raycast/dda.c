@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 17:38:54 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/21 20:17:31 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/30 18:22:09 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ static void	init_dda(t_ctx *ctx)
 double	dda(t_ctx *ctx)
 {
 	const t_dda	*dda = &(ctx->player.dda);
-	bool		is_vertical_side;
 
 	init_dda(ctx);
 	dda_check_dir(ctx->player.ray_dir, &ctx->player.dda, ctx->player.pos);
@@ -63,16 +62,16 @@ double	dda(t_ctx *ctx)
 		{
 			dda->side_dist->x += dda->delta_dist->x;
 			dda->cell->x += dda->step_dir->x;
-			is_vertical_side = false;
+			*dda->is_vertical_side = false;
 		}
 		else
 		{
 			dda->side_dist->y += dda->delta_dist->y;
 			dda->cell->y += dda->step_dir->y;
-			is_vertical_side = true;
+			*dda->is_vertical_side = true;
 		}
 	}
-	if (!is_vertical_side)
+	if (!*dda->is_vertical_side)
 		return (dda->side_dist->x - dda->delta_dist->x);
 	return (dda->side_dist->y - dda->delta_dist->y);
 }

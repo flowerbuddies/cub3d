@@ -5,5 +5,6 @@
     "locale": "c",
     "complex": "c",
     "ios": "c"
-  }
+  },
+  "cmake.configureOnOpen": false
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 17:27:38 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/20 17:22:01 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/30 18:20:10 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	free_2d(const char **obj)
 	free(obj);
 }
 
-static void	free_params(const t_assets *assets)
+static void	free_assets(const t_assets *assets)
 {
 	if (assets->north)
 		mlx_delete_texture(assets->north);
@@ -56,6 +56,8 @@ static void	free_player(const t_player *player)
 		free(player->pos);
 	if (player->ray_dir)
 		free(player->ray_dir);
+	if (player->hit_pos)
+		free(player->hit_pos);
 	if (player->plane)
 		free(player->plane);
 	if (player->dda.side_dist)
@@ -66,6 +68,8 @@ static void	free_player(const t_player *player)
 		free(player->dda.step_dir);
 	if (player->dda.cell)
 		free(player->dda.cell);
+	if (player->dda.is_vertical_side)
+		free(player->dda.is_vertical_side);
 }
 
 void	free_ctx(void)
@@ -74,7 +78,7 @@ void	free_ctx(void)
 
 	if (ctx->mlx)
 		mlx_terminate(ctx->mlx);
-	free_params(&ctx->assets);
+	free_assets(&ctx->assets);
 	free_map(&ctx->map);
 	free_player(&ctx->player);
 }

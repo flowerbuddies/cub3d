@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defs.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/10/21 20:44:06 by hunam            ###   ########.fr       */
+/*   Updated: 2023/10/30 18:20:28 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_dda
 	t_vec2			*delta_dist;
 	t_vec2_int		*step_dir;
 	t_vec2_int		*cell;
+	bool			*is_vertical_side;
 }					t_dda;
 
 typedef struct s_player
@@ -74,6 +75,8 @@ typedef struct s_player
 	t_vec2			*dir;
 	// TODO: maybe move these fields
 	t_vec2			*ray_dir;
+	t_vec2			*hit_pos;
+	mlx_texture_t	*wall_txtr;
 	t_vec2			*plane;
 	t_dda			dda;
 	mlx_image_t		*camera;
