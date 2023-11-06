@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:22:30 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/06 14:35:23 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/06 15:56:02 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ t_ctx	*get_ctx(void)
 
 static void	init_mlx(t_ctx *ctx)
 {
-	mlx_set_setting(MLX_STRETCH_IMAGE, true);
-	ctx->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", true);
+	ctx->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", false);
 	if (!ctx->mlx)
 		error(NULL, NULL);
 }

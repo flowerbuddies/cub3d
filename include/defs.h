@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/06 14:45:32 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:04:14 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,17 @@ typedef struct s_player
 {
 	t_vec2f			*pos;
 	t_vec2f			*dir;
-	// TODO: maybe move these fields
+	mlx_image_t		*camera;
+	t_vec2f			*plane;
+}					t_player;
+
+typedef struct s_raycast
+{
 	t_vec2f			*ray_dir;
 	t_vec2f			*hit_pos;
 	mlx_texture_t	*wall_txtr;
-	t_vec2f			*plane;
 	t_dda			dda;
-	mlx_image_t		*camera;
-}					t_player;
+}					t_raycast;
 
 typedef struct s_ctx
 {
@@ -89,6 +92,7 @@ typedef struct s_ctx
 	t_assets		assets;
 	t_map			map;
 	t_player		player;
+	t_raycast		raycast;
 }					t_ctx;
 
 #endif

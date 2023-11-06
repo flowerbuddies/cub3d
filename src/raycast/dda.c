@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 17:38:54 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/06 14:44:51 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:16:57 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,24 +62,24 @@ static void	check_dir(t_vec2f *ray_dir, const t_dda *dda, const t_vec2f *pos)
 
 static void	init_dda(t_ctx *ctx)
 {
-	const t_dda	*dda = &(ctx->player.dda);
+	const t_dda	*dda = &(ctx->raycast.dda);
 
 	dda->cell->x = ctx->player.pos->x;
 	dda->cell->y = ctx->player.pos->y;
 	dda->delta_dist->x = BIG_DOUBLE;
 	dda->delta_dist->y = BIG_DOUBLE;
-	if (ctx->player.ray_dir->x != 0)
-		dda->delta_dist->x = fabs(1.0 / ctx->player.ray_dir->x);
-	if (ctx->player.ray_dir->y != 0)
-		dda->delta_dist->y = fabs(1.0 / ctx->player.ray_dir->y);
+	if (ctx->raycast.ray_dir->x != 0)
+		dda->delta_dist->x = fabs(1.0 / ctx->raycast.ray_dir->x);
+	if (ctx->raycast.ray_dir->y != 0)
+		dda->delta_dist->y = fabs(1.0 / ctx->raycast.ray_dir->y);
 }
 
 double	dda(t_ctx *ctx)
 {
-	const t_dda	*dda = &(ctx->player.dda);
+	const t_dda	*dda = &(ctx->raycast.dda);
 
 	init_dda(ctx);
-	check_dir(ctx->player.ray_dir, &ctx->player.dda, ctx->player.pos);
+	check_dir(ctx->raycast.ray_dir, &ctx->raycast.dda, ctx->player.pos);
 	while (get_tile(&ctx->map, dda->cell->x, dda->cell->y) == FLOOR)
 	{
 		if (dda->side_dist->x < dda->side_dist->y)

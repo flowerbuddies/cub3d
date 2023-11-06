@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/06 14:26:00 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/06 14:26:43 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:16:31 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,22 +23,22 @@ void	draw_hit(t_ctx *ctx)
 	{
 		x = -hit_size;
 		while (++x < hit_size)
-			mlx_put_pixel(ctx->mini.img, ctx->player.hit_pos->x
-				* ctx->mini.scale + x, ctx->player.hit_pos->y * ctx->mini.scale
+			mlx_put_pixel(ctx->mini.img, ctx->raycast.hit_pos->x
+				* ctx->mini.scale + x, ctx->raycast.hit_pos->y * ctx->mini.scale
 				+ y, MINIMAP_WALL_COLOR * 2);
 	}
 }
 
 static int	get_texture_color(t_ctx *ctx, double x_mapping, double y_mapping)
 {
-	const int	x_offset = ctx->player.wall_txtr->width * x_mapping;
-	const int	y_offset = ctx->player.wall_txtr->height * y_mapping;
-	const int	offset = x_offset * ctx->player.wall_txtr->bytes_per_pixel
-		+ y_offset * ctx->player.wall_txtr->bytes_per_pixel
-		* ctx->player.wall_txtr->width;
-	const int	color = ctx->player.wall_txtr->pixels[offset] << 24
-		| ctx->player.wall_txtr->pixels[offset + 1] << 16
-		| ctx->player.wall_txtr->pixels[offset + 2] << 8
+	const int	x_offset = ctx->raycast.wall_txtr->width * x_mapping;
+	const int	y_offset = ctx->raycast.wall_txtr->height * y_mapping;
+	const int	offset = x_offset * ctx->raycast.wall_txtr->bytes_per_pixel
+		+ y_offset * ctx->raycast.wall_txtr->bytes_per_pixel
+		* ctx->raycast.wall_txtr->width;
+	const int	color = ctx->raycast.wall_txtr->pixels[offset] << 24
+		| ctx->raycast.wall_txtr->pixels[offset + 1] << 16
+		| ctx->raycast.wall_txtr->pixels[offset + 2] << 8
 		| 0xFF;
 
 	return (color);
@@ -57,7 +57,7 @@ void	draw_vert_strips(t_ctx *ctx, int x, double ray_len,
 		y_strip = 0;
 	end_y_strip = line_height / 2 + HEIGHT / 2;
 	if (end_y_strip >= HEIGHT)
-		end_y_strip = HEIGHT - 1;
+		end_y_strip = HEIGHT;
 	while (y_strip < end_y_strip)
 	{
 		y_mapping = (double)(y_strip - (-line_height / 2 + HEIGHT / 2))

@@ -8,7 +8,7 @@ MLX42 := lib/mlx42/build
 
 # Compilation settings
 CC := cc #compiler
-CFLAGS := -Wextra -Wall -g#flags #TODO: [add] -Werror -Ofast  -Wunreachable-code [remove] -g -fsanitize=address
+CFLAGS := -Wextra -Wall  -g#-Ofast #-g -fsanitize=address#flags #TODO: [add] -Werror -Ofast  -Wunreachable-code [remove] -g -fsanitize=address
 CFLAGS += -Iinclude -Ilib/mlx42/include -I$(LIBFT) #includes
 LIBS := -L$(MLX42) -lmlx42 #MLX42
 LIBS += -L$(BREW)/Cellar/glfw/3.3.8/lib -lglfw #GLFW
@@ -25,8 +25,8 @@ SRCS := $(addprefix $(SRCS_DIR)/,\
 	parser/parser.c\
 	parser/params.c\
 	parser/map.c\
-	parser/map_closed.c\
-	parser/error.c\
+	parser/validity.c\
+	parser/utils.c\
 	minimap/minimap.c\
 	raycast/raycast.c\
 	raycast/draw.c\

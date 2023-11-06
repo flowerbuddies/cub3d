@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 17:27:38 by hunam             #+#    #+#             */
-/*   Updated: 2023/10/30 18:20:10 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:10:28 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-void	free_2d(const char **obj)
-{
-	int	i;
-
-	i = 0;
-	while (obj[i])
-		free((char *)obj[i++]);
-	free(obj);
-}
 
 static void	free_assets(const t_assets *assets)
 {
@@ -54,22 +44,26 @@ static void	free_player(const t_player *player)
 		free(player->dir);
 	if (player->pos)
 		free(player->pos);
-	if (player->ray_dir)
-		free(player->ray_dir);
-	if (player->hit_pos)
-		free(player->hit_pos);
 	if (player->plane)
 		free(player->plane);
-	if (player->dda.side_dist)
-		free(player->dda.side_dist);
-	if (player->dda.delta_dist)
-		free(player->dda.delta_dist);
-	if (player->dda.step_dir)
-		free(player->dda.step_dir);
-	if (player->dda.cell)
-		free(player->dda.cell);
-	if (player->dda.is_vertical_side)
-		free(player->dda.is_vertical_side);
+}
+
+static void	free_raycast(const t_raycast *raycast)
+{
+	if (raycast->ray_dir)
+		free(raycast->ray_dir);
+	if (raycast->hit_pos)
+		free(raycast->hit_pos);
+	if (raycast->dda.side_dist)
+		free(raycast->dda.side_dist);
+	if (raycast->dda.delta_dist)
+		free(raycast->dda.delta_dist);
+	if (raycast->dda.step_dir)
+		free(raycast->dda.step_dir);
+	if (raycast->dda.cell)
+		free(raycast->dda.cell);
+	if (raycast->dda.is_vertical_side)
+		free(raycast->dda.is_vertical_side);
 }
 
 void	free_ctx(void)
@@ -81,4 +75,5 @@ void	free_ctx(void)
 	free_assets(&ctx->assets);
 	free_map(&ctx->map);
 	free_player(&ctx->player);
+	free_raycast(&ctx->raycast);
 }
