@@ -1,7 +1,7 @@
-NO assets/HR/nor.png
-SO assets/HR/sou.png
-WE assets/HR/wes.png
-EA assets/HR/eas.png
+NO textures/assets/hr/nor.png
+SO textures/assets/hr/sou.png
+WE textures/assets/hr/wes.png
+EA textures/assets/hr/eas.png
 
 F 18,255,25
 C 153,204,255

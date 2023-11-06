@@ -1,7 +1,7 @@
-NO assets/block/grass_block_snow.png
-SO assets/block/grass_block_side.png
-WE assets/block/mycelium_side.png
-EA assets/block/podzol_side.png
+NO assets/textures/blocks/grass_block_snow.png
+SO assets/textures/blocks/grass_block_side.png
+WE assets/textures/blocks/mycelium_side.png
+EA assets/textures/blocks/podzol_side.png
 
 F 18,255,25
 C 153,204,255
