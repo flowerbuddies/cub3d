@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:22:30 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/06 15:56:02 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:37:23 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	init_mlx(t_ctx *ctx)
 	ctx->mlx = mlx_init(WIDTH, HEIGHT, "Cub3D", false);
 	if (!ctx->mlx)
 		error(NULL, NULL);
+	mlx_set_cursor_mode(ctx->mlx, MLX_MOUSE_HIDDEN);
 }
 
 static void	draw_fps_counter(t_ctx *ctx)
@@ -56,7 +57,7 @@ int	main(int ac, char **av)
 	init_raycast(ctx);
 	draw_minimap(ctx);
 	draw_raycast(ctx);
-	mlx_cursor_hook(ctx->mlx, (mlx_cursorfunc)cursor_hook, ctx);
+	mlx_loop_hook(ctx->mlx, (t_hook)cursor_hook, ctx);
 	mlx_loop_hook(ctx->mlx, (t_hook)keys_hook, ctx);
 	mlx_loop_hook(ctx->mlx, (t_hook)draw_fps_counter, ctx);
 	mlx_loop(ctx->mlx);

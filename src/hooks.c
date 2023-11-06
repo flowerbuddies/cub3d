@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 18:06:36 by hunam             #+#    #+#             */
-/*   Updated: 2023/11/06 14:45:00 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:34:26 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,13 +84,20 @@ void	keys_hook(t_ctx *ctx)
 	draw_raycast(ctx);
 }
 
-void	cursor_hook(double x, double y, t_ctx *ctx)
+void	cursor_hook(t_ctx *ctx)
 {
-	static double	old_x = INT_MAX;
+	const int	mid_x = WIDTH / 2;
+	int			x;
+	int			y;
+	double		speed;
 
-	(void)y;
-	if (old_x == INT_MAX)
-		old_x = x;
-	rot_cam(ctx, (x - old_x) / 200);
-	old_x = x;
+	mlx_get_mouse_pos(ctx->mlx, &x, &y);
+	speed = 0;
+	if (x < mid_x)
+		speed = -.1;
+	else if (x > mid_x)
+		speed = .1;
+	if (speed)
+		rot_cam(ctx, speed);
+	mlx_set_mouse_pos(ctx->mlx, mid_x, HEIGHT / 2);
 }
