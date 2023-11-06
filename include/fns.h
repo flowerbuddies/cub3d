@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   fns.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: etattevi <etattevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/06 16:26:23 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/06 22:05:05 by etattevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ void		cursor_hook(t_ctx *ctx);
 
 // background.c
 void		init_background(t_ctx *ctx);
+void		init_animated_sky(t_ctx *ctx);
+void		draw_half(mlx_image_t *img, int color);
+void		draw_static_sky(t_ctx *ctx);
+void		animate_sky(t_ctx *ctx);
 
 // free.c
 void		free_ctx(void);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: etattevi <etattevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:22:30 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/06 16:57:50 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/06 21:33:13 by etattevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int	main(int ac, char **av)
 	mlx_loop_hook(ctx->mlx, (t_hook)cursor_hook, ctx);
 	mlx_loop_hook(ctx->mlx, (t_hook)keys_hook, ctx);
 	mlx_loop_hook(ctx->mlx, (t_hook)draw_fps_counter, ctx);
+	mlx_loop_hook(ctx->mlx, (t_hook)animate_sky, ctx);
 	mlx_loop(ctx->mlx);
 	free_ctx();
 }

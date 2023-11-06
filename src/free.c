@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: etattevi <etattevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/11 17:27:38 by hunam             #+#    #+#             */
-/*   Updated: 2023/11/06 16:10:28 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/06 21:42:50 by etattevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static void	free_assets(const t_assets *assets)
 		mlx_delete_texture(assets->east);
 	if (assets->west)
 		mlx_delete_texture(assets->west);
-	if (assets->ceiling)
-		free(assets->ceiling);
+	if (assets->sky)
+		free(assets->sky);
 	if (assets->floor)
 		free(assets->floor);
 }

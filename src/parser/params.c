@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   params.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: etattevi <etattevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/06 14:30:32 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/06 19:08:23 by etattevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static void	parse_param(char *line, t_assets *assets)
 	else if (streq(parts[0], "F"))
 		assets->floor = get_color(parts, line);
 	else if (streq(parts[0], "C"))
-		assets->ceiling = get_color(parts, line);
+		assets->sky = get_color(parts, line);
 	else
 	{
 		(free_ctx(), free_2d(parts), free(line));
@@ -108,7 +108,7 @@ void	parse_params(int fd, t_assets *assets)
 	char	*line;
 
 	while (!(assets->north && assets->south && assets->east && assets->west
-			&& assets->ceiling && assets->floor))
+			&& assets->sky && assets->floor))
 	{
 		line = gnl_no_nl(fd);
 		if (!line)

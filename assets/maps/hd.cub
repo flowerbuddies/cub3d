@@ -1,10 +1,10 @@
-NO textures/assets/hr/nor.png
-SO textures/assets/hr/sou.png
-WE textures/assets/hr/wes.png
-EA textures/assets/hr/eas.png
+NO assets/textures/hr/nor.png
+SO assets/textures/hr/sou.png
+WE assets/textures/hr/wes.png
+EA assets/textures/hr/eas.png
 
 F 18,255,25
-C 153,204,255
+C 0,0,0
 
         1111111111111111111111111
         1000000000110000000000001

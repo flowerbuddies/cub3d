@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   defs.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: etattevi <etattevi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/06 16:04:14 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/06 19:51:08 by etattevi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,8 @@ typedef struct s_assets
 	mlx_texture_t	*east;
 	mlx_texture_t	*west;
 	int				*floor;
-	int				*ceiling;
+	int				*sky;
+	mlx_image_t		*animated_sky[3];
 }					t_assets;
 
 typedef struct s_minimap
