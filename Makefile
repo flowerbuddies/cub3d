@@ -8,7 +8,7 @@ MLX42 := lib/mlx42/build
 
 # Compilation settings
 CC := cc #compiler
-CFLAGS := -Wextra -Wall  -g#-Ofast #-g -fsanitize=address#flags #TODO: [add] -Werror -Ofast  -Wunreachable-code [remove] -g -fsanitize=address
+CFLAGS := -Wextra -Wall -Werror -Ofast
 CFLAGS += -Iinclude -Ilib/mlx42/include -I$(LIBFT) #includes
 LIBS := -L$(MLX42) -lmlx42 #MLX42
 LIBS += -L$(BREW)/Cellar/glfw/3.3.8/lib -lglfw #GLFW
@@ -53,7 +53,7 @@ $(OBJS_DIRS):
 
 # Dependencies rules
 $(MLX42)/libmlx42.a:
-	@cmake lib/mlx42 -DDEBUG=1 -B $(MLX42) #TODO: rm -DDEBUG=1
+	@cmake lib/mlx42 -B $(MLX42)
 	@make -C $(MLX42) -j4
 
 $(LIBFT)/libft.a:

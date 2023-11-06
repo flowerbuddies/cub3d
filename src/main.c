@@ -6,14 +6,12 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:22:30 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/06 16:37:23 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/06 16:57:50 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-// TODO maybe replace this by having a ref to ctx in all ctx fields,
-// ie: make `player->ctx` possible
 t_ctx	*get_ctx(void)
 {
 	static t_ctx	ctx;
