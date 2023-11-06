@@ -6,7 +6,7 @@
 /*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:40:14 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/06 16:16:07 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/06 17:55:08 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,23 @@ static void	set_wall_texture(t_ctx *ctx)
 
 static double	get_x_mapping(t_ctx *ctx)
 {
+	const double	delta_x
+		= ctx->raycast.hit_pos->x - (double)ctx->raycast.dda.cell->x;
+	const double	delta_y
+		= ctx->raycast.hit_pos->y - (double)ctx->raycast.dda.cell->y;
+
 	if (*ctx->raycast.dda.is_vertical_side)
-		return (ctx->raycast.hit_pos->x - (double)ctx->raycast.dda.cell->x);
+	{
+		if (delta_y > 0.5)
+			return (delta_x);
+		return (1 - delta_x);
+	}
 	else
-		return (ctx->raycast.hit_pos->y - (double)ctx->raycast.dda.cell->y);
+	{
+		if (delta_x > 0.5)
+			return (1 - delta_y);
+		return (delta_y);
+	}
 }
 
 void	draw_raycast(t_ctx *ctx)
