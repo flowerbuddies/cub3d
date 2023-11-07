@@ -8,7 +8,7 @@ MLX42 := lib/mlx42/build
 
 # Compilation settings
 CC := cc #compiler
-CFLAGS := -Wextra -Wall -Werror -Ofast
+CFLAGS := -Wextra -Wall  -fsanitize=address -g#-Ofast -Werror
 CFLAGS += -Iinclude -Ilib/mlx42/include -I$(LIBFT) #includes
 LIBS := -L$(MLX42) -lmlx42 #MLX42
 LIBS += -L$(BREW)/Cellar/glfw/3.3.8/lib -lglfw #GLFW
@@ -23,6 +23,7 @@ SRCS := $(addprefix $(SRCS_DIR)/,\
 	free.c\
 	background/background.c\
 	background/sky.c\
+	background/visor.c\
 	parser/parser.c\
 	parser/params.c\
 	parser/map.c\

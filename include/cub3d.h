@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etattevi <etattevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/06 19:36:53 by etattevi         ###   ########.fr       */
+/*   Updated: 2023/11/07 13:43:07 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,6 @@
 # define MINIMAP_VOID_COLOR 0xd8e993FF
 # define MINIMAP_FLOOR_COLOR 0xfffefbFF
 # define MINIMAP_WALL_COLOR 0xf7d0d5FF
+# define VISOR_TRANSPARENCY 100
 
 #endif

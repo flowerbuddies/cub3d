@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sky.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etattevi <etattevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 18:40:48 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/06 22:03:25 by etattevi         ###   ########.fr       */
+/*   Updated: 2023/11/07 13:47:58 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	init_animated_sky(t_ctx *ctx)
 		|| !ctx->assets.animated_sky[2])
 		error(ctx->mlx, NULL);
 	(mlx_delete_texture(sprites[0]), mlx_delete_texture(sprites[1]),
-		mlx_delete_texture(sprites[2]));
+		mlx_delete_texture(sprites[2])); // mlx may need these as long as images are used
 	if (mlx_image_to_window(ctx->mlx, ctx->assets.animated_sky[0], 0, 0) == -1)
 		error(ctx->mlx, NULL);
 	ctx->assets.animated_sky[0]->instances[0].z = -2;
