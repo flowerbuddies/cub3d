@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sky.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etattevi <etattevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 18:40:48 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/06 22:03:25 by etattevi         ###   ########.fr       */
+/*   Updated: 2023/11/07 15:49:07 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,13 @@ void	draw_static_sky(t_ctx *ctx)
 	sky->instances[0].z = -1;
 }
 
-void animate_sky(t_ctx *ctx)
+void	animate_sky(t_ctx *ctx)
 {
 	static int	delta = 20;
 	int			i;
 
+	if (*ctx->assets.sky != BLACK)
+		return ;
 	delta--;
 	if (delta != 0)
 		return ;
