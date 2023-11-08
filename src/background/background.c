@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   background.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etattevi <etattevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 18:40:48 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/06 22:04:50 by etattevi         ###   ########.fr       */
+/*   Updated: 2023/11/08 14:09:11 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ static void	draw_floor(t_ctx *ctx)
 
 	floor = mlx_new_image(ctx->mlx, WIDTH, HEIGHT / 2);
 	draw_half(floor, *ctx->assets.floor);
-	if (mlx_image_to_window(ctx->mlx, (mlx_image_t *)floor, 0, HEIGHT / 2) == -1)
+	if (mlx_image_to_window(ctx->mlx, (mlx_image_t *)floor, 0, HEIGHT / 2) ==
+		-1)
 		error(ctx->mlx, NULL);
 	floor->instances[0].z = -1;
 }
@@ -40,7 +41,7 @@ static void	draw_floor(t_ctx *ctx)
 void	init_background(t_ctx *ctx)
 {
 	draw_floor(ctx);
-	if (*ctx->assets.sky == BLACK)
+	if (*ctx->assets.sky == SECRET)
 		return (init_animated_sky(ctx));
 	draw_static_sky(ctx);
 }

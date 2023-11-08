@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 18:40:48 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/07 15:49:07 by hunam            ###   ########.fr       */
+/*   Updated: 2023/11/08 14:09:11 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	animate_sky(t_ctx *ctx)
 	static int	delta = 20;
 	int			i;
 
-	if (*ctx->assets.sky != BLACK)
+	if (*ctx->assets.sky != SECRET)
 		return ;
 	delta--;
 	if (delta != 0)
