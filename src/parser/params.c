@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   params.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etattevi <etattevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/06 19:08:23 by etattevi         ###   ########.fr       */
+/*   Updated: 2023/11/08 14:37:31 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static mlx_texture_t	*get_texture(const char **parts, char *line)
 		(free_ctx(), free_2d(parts), free(line));
 		error(NULL, "Invalid NO/SO/EA/WE parameter argument count");
 	}
-	out = mlx_load_png(parts[1]);
+	out = safe_load_png(parts[1]);
 	if (!out)
 	{
 		(free_ctx(), free_2d(parts), free(line));

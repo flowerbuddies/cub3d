@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sky.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 18:40:48 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/08 14:09:11 by hunam            ###   ########.fr       */
+/*   Updated: 2023/11/08 14:42:07 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@ void	init_animated_sky(t_ctx *ctx)
 {
 	mlx_texture_t	*sprites[3];
 
-	sprites[0] = mlx_load_png("assets/textures/sky/frame0.png");
-	sprites[1] = mlx_load_png("assets/textures/sky/frame1.png");
-	sprites[2] = mlx_load_png("assets/textures/sky/frame2.png");
+	sprites[0] = safe_load_png("assets/textures/sky/frame0.png");
+	sprites[1] = safe_load_png("assets/textures/sky/frame1.png");
+	sprites[2] = safe_load_png("assets/textures/sky/frame2.png");
 	if (!sprites[0] || !sprites[1] || !sprites[2])
-		error(ctx->mlx, NULL);
+		error(ctx->mlx, "Animated sky frame not found");
 	ctx->assets.animated_sky[0] = mlx_texture_to_image(ctx->mlx, sprites[0]);
 	ctx->assets.animated_sky[1] = mlx_texture_to_image(ctx->mlx, sprites[1]);
 	ctx->assets.animated_sky[2] = mlx_texture_to_image(ctx->mlx, sprites[2]);

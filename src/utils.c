@@ -3,26 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: etattevi <etattevi@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:36:17 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/06 22:01:18 by etattevi         ###   ########.fr       */
+/*   Updated: 2023/11/08 14:40:30 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
+
+mlx_texture_t	*safe_load_png(const char *filename)
+{
+	int	fd;
+
+	fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		return (NULL);
+	close(fd);
+	return (mlx_load_png(filename));
+}
 
 void	clear_img(mlx_image_t *img)
 {
 	ft_memset(img->pixels, 0, img->width * img->height * sizeof(int32_t));
 }
 
-
 void	error(mlx_t *mlx, char *message)
 {
+	ft_putstr_fd("Error\n", 2);
 	if (mlx)
 		mlx_close_window(mlx);
-	ft_putstr_fd("Error\n", 2);
 	if (message)
 		ft_putstr_fd(message, 2);
 	else if (mlx)
