@@ -6,7 +6,7 @@
 /*   By: hunam <hunam@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 14:40:51 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/08 14:09:29 by hunam            ###   ########.fr       */
+/*   Updated: 2023/11/08 14:11:35 by hunam            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define FOV .66
 # define BIG_DOUBLE 1e30
 # define DEADZONE 5
-# define SECRET 0x2A2A2A
+# define SECRET 0x2A2A2AFF
 
 # define MINIMAP_SIZE .33
 # define MINIMAP_VOID_COLOR 0xd8e993FF
