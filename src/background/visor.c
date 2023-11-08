@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   visor.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marmulle <marmulle@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: marmulle <marmulle@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 13:16:24 by marmulle          #+#    #+#             */
-/*   Updated: 2023/11/07 14:07:02 by marmulle         ###   ########.fr       */
+/*   Updated: 2023/11/08 14:03:02 by marmulle         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	make_texture_transparent(mlx_texture_t *texture, int transparency)
 {
-	const int	pixels_length = texture->height 
-		* texture->width * texture->bytes_per_pixel;
+	const int	pixels_length = texture->height * texture->width
+			* texture->bytes_per_pixel;
 	int			i;
 
 	if (transparency > 255)
@@ -30,9 +30,37 @@ static void	make_texture_transparent(mlx_texture_t *texture, int transparency)
 	}
 }
 
-mlx_image_t	*scale_texture_to_window(mlx_texture_t *texture)
+mlx_image_t	*scale_texture_to_window(t_ctx *ctx, mlx_texture_t *texture)
 {
-	return 
+	mlx_image_t	*image;
+	int			x;
+	int			y;
+	int			i;
+	double		tex_x;
+	double		tex_y;
+	int			tex_i;
+
+	image = mlx_new_image(ctx->mlx, WIDTH, HEIGHT);
+	if (!image)
+		error(ctx->mlx, NULL);
+	y = -1;
+	while (++y < HEIGHT)
+	{
+		x = -1;
+		while (++x < WIDTH)
+		{
+			tex_x = (double)x / WIDTH;
+			tex_y = (double)y / HEIGHT;
+			tex_i = tex_x * texture->width * texture->bytes_per_pixel + tex_y
+				* texture->height * texture->bytes_per_pixel;
+			i = x * sizeof(u_int8_t) + y * WIDTH * sizeof(u_int8_t);
+			image->pixels[i] = texture->pixels[tex_i];
+			image->pixels[i + 1] = texture->pixels[tex_i + 1];
+			image->pixels[i + 2] = texture->pixels[tex_i + 2];
+			image->pixels[i + 3] = texture->pixels[tex_i + 3];
+		}
+	}
+	return (image);
 }
 
 static void	init_visor(t_ctx *ctx)
@@ -44,11 +72,11 @@ static void	init_visor(t_ctx *ctx)
 		error(ctx->mlx, NULL);
 	make_texture_transparent(texture, VISOR_TRANSPARENCY);
 	ctx->assets.visor = mlx_texture_to_image(ctx->mlx, texture);
+	// ctx->assets.visor = scale_texture_to_window(ctx, texture);
 	if (!ctx->assets.visor)
 		error(ctx->mlx, NULL);
 	// ctx->assets.visor->instances[0].z = 10;
 }
-
 
 void	draw_visor(t_ctx *ctx)
 {
