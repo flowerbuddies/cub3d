@@ -2,36 +2,57 @@
 NAME := cub3D
 SRCS_DIR := src
 BUILD_DIR := build
-BREW := $(shell brew --prefix)
 LIBFT := lib/libft
 MLX42 := lib/mlx42/build
 
-# Compilation settings
-CC := cc #compiler
+# Detect platform
+UNAME_S := $(shell uname -s)
+
+# Compiler
+CC := cc
+
+# Compiler and linker flags
 CFLAGS := -Wextra -Wall -Werror -Ofast
-CFLAGS += -Iinclude -Ilib/mlx42/include -I$(LIBFT) #includes
-LIBS := -L$(MLX42) -lmlx42 #MLX42
-LIBS += -L$(BREW)/Cellar/glfw/3.3.8/lib -lglfw #GLFW
-LIBS += -L$(LIBFT) -lft #libft
-LIBS += -lm #math
+LDFLAGS := -lm # math library
+
+# Include directories
+INCLUDES := -Iinclude -Ilib/mlx42/include -I$(LIBFT)
+
+# Use pkg-config to get GLFW flags
+PKG_CONFIG := pkg-config
+GLFW_CFLAGS := $(shell $(PKG_CONFIG) --cflags glfw3)
+GLFW_LIBS := $(shell $(PKG_CONFIG) --libs glfw3)
+
+# Add platform-specific settings
+ifeq ($(UNAME_S), Darwin) # macOS
+    BREW := $(shell brew --prefix)
+    CFLAGS += $(GLFW_CFLAGS) $(INCLUDES)
+    LIBS := -L$(MLX42) -lmlx42 $(GLFW_LIBS) -L$(LIBFT) -lft $(LDFLAGS)
+else ifeq ($(UNAME_S), Linux) # Linux
+    CFLAGS += $(GLFW_CFLAGS) $(INCLUDES)
+    LIBS := -L$(MLX42) -lmlx42 $(GLFW_LIBS) -L$(LIBFT) -lft $(LDFLAGS)
+else ifeq ($(UNAME_S), Windows_NT) # Windows (assuming MinGW or similar)
+    CFLAGS += $(GLFW_CFLAGS) $(INCLUDES)
+    LIBS := -L$(MLX42) -lmlx42 $(GLFW_LIBS) -L$(LIBFT) -lft $(LDFLAGS)
+endif
 
 # Source files
-SRCS := $(addprefix $(SRCS_DIR)/,\
-	main.c\
-	utils.c\
-	hooks.c\
-	free.c\
-	background/background.c\
-	background/sky.c\
-	parser/parser.c\
-	parser/params.c\
-	parser/map.c\
-	parser/validity.c\
-	parser/utils.c\
-	minimap/minimap.c\
-	raycast/raycast.c\
-	raycast/draw.c\
-	raycast/dda.c\
+SRCS := $(addprefix $(SRCS_DIR)/, \
+    main.c \
+    utils.c \
+    hooks.c \
+    free.c \
+    background/background.c \
+    background/sky.c \
+    parser/parser.c \
+    parser/params.c \
+    parser/map.c \
+    parser/validity.c \
+    parser/utils.c \
+    minimap/minimap.c \
+    raycast/raycast.c \
+    raycast/draw.c \
+    raycast/dda.c \
 )
 OBJS := $(patsubst $(SRCS_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 OBJS_DIRS := $(sort $(dir $(OBJS)))
