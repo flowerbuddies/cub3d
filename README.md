@@ -2,6 +2,8 @@
 
 cub3D loads a 2D map visualized by a classic "3D" rendering technique known as raycasting, popularized by the classic [Wolfenstein 3D game (1994)](https://store.steampowered.com/app/2270/Wolfenstein_3D/).
 
+![cub3D demo](assets/cub3D_demo_720.gif)
+
 This project is developed in C with restricted usage of its standard library and a basic rendering library. Graphics rendering and window management via OpenGL and GLFW [MLX42](https://github.com/codam-coding-college/MLX42). I also use [libft](https://github.com/Markfelixm/42-Libft), a custom subset of the standard C library, which I made to familiarize myself with the language.
 
 ## Build
